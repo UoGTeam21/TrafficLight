@@ -74,15 +74,32 @@ for(tySN=3,tySN>0,tySN--)
   GPIO.output(5, GPIO.HIGH); //SN yellow, else red
   }
   
-  if(button)                  //pederstrain button check
+if(wiringPiSetup()<0) //初始化wiringPi库
+ {
+ printf("can't init wiringPi\n"); //初始化失败时，打印出提示信息，并且推出
+   return -1;
+  }
+  printf("test interrput\n"); //打印提示信息
+  pinMode(0,INPUT); //引脚0为输入模式
+  pullUpDnControl(0,PUD_UP); //设置0号引脚上拉
+  
+  //注册中断程序
+  if(wiringPiISR(0,INT_EDGE_FALLING,&button)<0) //设置引脚下降沿触发
   {
+     printf("unable ISR\n");   
+  }
+ 
+  while(1)
+  {
+     if(flag)
+{
     for(tgside=10,tgEW>0,tgEW--)
   {
    GPIO.output(18, GPIO.HIGH);
   GPIO.output(23, GPIO.HIGH);
   GPIO.output(6, GPIO.HIGH); //side green, else red
-  flag=0;
 }
+flag=0;
 }
 }
 
@@ -96,26 +113,5 @@ sleep(1)
 
 void button()
 {
-if(wiringPiSetup()<0) //初始化wiringPi库
- {
- printf("can't init wiringPi\n"); //初始化失败时，打印出提示信息，并且推出
-   return -1;
-  }
-  printf("test interrput\n"); //打印提示信息
-  pinMode(0,INPUT); //引脚0为输入模式
-  pullUpDnControl(0,PUD_UP); //设置0号引脚上拉
-  
-  //注册中断程序
-  if(wiringPiISR(0,INT_EDGE_FALLING,&myInterruptService)<0) //设置引脚下降沿触发
-  {
-     printf("unable ISR\n");   
-  }
- 
-  while(1)
-  {
-     if(flag)
-{
-while(digitalRead(0)==LOW); //检测按键是否松开，没有松开的话，一直等待
-return flag; //打印提示信息
+flag=1;
 }
- } 
