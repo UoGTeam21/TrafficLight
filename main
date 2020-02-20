@@ -115,3 +115,55 @@ void button()
 {
 flag=1;
 }
+
+ void SNsensorini()
+ {
+GPIO.setup(12,GPIO.IN)
+GPIO.setup(18,GPIO.IN)
+GPIO.setup(2,GPIO.IN)
+GPIO.setup(3,GPIO.IN)
+ }
+
+  void EWsesorini()
+{
+GPIO.setup(23,GPIO.IN)
+GPIO.setup(25,GPIO.IN)
+GPIO.setup(4,GPIO.IN)
+GPIO.setup(5,GPIO.IN)
+}
+
+void redEWini()
+{
+GPIO.setup(18,GPIO.OUT);
+GPIO.output(18, GPIO.LOW);
+}
+
+void redSNini()
+{
+GPIO.setup(23,GPIO.OUT);
+GPIO.output(23, GPIO.LOW);
+}
+
+void greenEWini()
+{
+GPIO.setup(25,GPIO.OUT);
+GPIO.output(23, GPIO.LOW);
+}
+
+void greenSNini()
+{
+GPIO.setup(12,GPIO.OUT);
+GPIO.output(12, GPIO.LOW);
+}
+
+void yellowEWini()
+{
+GPIO.setup(2,GPIO.OUT);
+GPIO.output(2, GPIO.LOW);
+}
+
+void yellowSNini()
+{
+GPIO.setup(3,GPIO.OUT);
+GPIO.output(3, GPIO.LOW);
+}
