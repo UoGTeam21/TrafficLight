@@ -19,6 +19,8 @@ PinMode(5,GPIO.INPUT)
 
 int main()
 {
+SNsensorini();
+EWsensorini();
 PinMode(23,GPIO.OUTPUT);
 
 for(;;)
