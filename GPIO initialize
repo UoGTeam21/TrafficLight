@@ -1,79 +1,79 @@
 void SNsensorini()
  {
-PINPUTMode(12,GPIO.INPUT)
-PINPUTMode(18,GPIO.INPUT)
-PINPUTMode(2,GPIO.INPUT)
-PINPUTMode(3,GPIO.INPUT)
+PinMode(12,GPIO.INPUT)
+PinMode(18,GPIO.INPUT)
+PinMode(2,GPIO.INPUT)
+PinMode(3,GPIO.INPUT)
  }
 
   void EWsesorini()
 {
-PINPUTMode(23,GPIO.INPUT)
-PINPUTMode(25,GPIO.INPUT)
-PINPUTMode(4,GPIO.INPUT)
-PINPUTMode(5,GPIO.INPUT)
+PinMode(23,GPIO.INPUT)
+PinMode(25,GPIO.INPUT)
+PinMode(4,GPIO.INPUT)
+PinMode(5,GPIO.INPUT)
 }
 
 void redEWini()
 {
-PINPUTMode(18,GPIO.OUTPUT);
-GPIO.OUTPUTput(18, GPIO.LOW);
+PinMode(18,GPIO.OUTPUT);
+digitalWrite(18, GPIO.LOW);
 }
 
 void redSNini()
 {
-PINPUTMode(23,GPIO.OUTPUT);
-GPIO.OUTPUTput(23, GPIO.LOW);
+PinMode(23,GPIO.OUTPUT);
+digitalWrite(23, GPIO.LOW);
 }
 
 void greenEWini()
 {
-PINPUTMode(25,GPIO.OUTPUT);
-GPIO.OUTPUTput(23, GPIO.LOW);
+PinMode(25,GPIO.OUTPUT);
+digitalWrite(23, GPIO.LOW);
 }
 
 void greenSNini()
 {
-PINPUTMode(12,GPIO.OUTPUT);
-GPIO.OUTPUTput(12, GPIO.LOW);
+PinMode(12,GPIO.OUTPUT);
+digitalWrite(12, GPIO.LOW);
 }
 
 void yellowEWini()
 {
-PINPUTMode(2,GPIO.OUTPUT);
-GPIO.OUTPUTput(2, GPIO.LOW);
+PinMode(2,GPIO.OUTPUT);
+digitalWrite(2, GPIO.LOW);
 }
 
 void yellowSNini()
 {
-PINPUTMode(3,GPIO.OUTPUT);
-GPIO.OUTPUTput(3, GPIO.LOW);
+PinMode(3,GPIO.OUTPUT);
+digitalWrite(3, GPIO.LOW);
 }
 
- INPUTt redEW=18; // pINPUT 12
-  INPUTt redSN=23; // pINPUT 16
-  INPUTt greenEW=25; // pINPUT 22
-  INPUTt greenSN=12; // pINPUT 32
-  INPUTt yellowEW=2; // pINPUT 3
-  INPUTt yellowSN=3; // pINPUT 5
-  INPUTt sider=5; // pINPUT 29 BCM !!!
-  INPUTt sideg=6; // pINPUT 31 BCM !!!
-  INPUTt extrasensor1=4;//pINPUT 16
-  INPUTt extrasensor2=5;//pINPUT 18
+redEW=18; // Pin 12
+redSN=23; // Pin 16
+greenEW=25; // Pin 22
+greenSN=12; // Pin 32
+yellowEW=2; // Pin 3
+yellowSN=3; // Pin 5
+sider=5; // Pin 29 BCM !!!
+sideg=6; // Pin 31 BCM !!!
+extrasensor1=4;//Pin 16
+extrasensor2=5;//Pin 18
   INPUTt flag=0;
   
   import RPi.GPIO as GPIO
   import time  
-PINPUTMode(18,GPIO.OUTPUT);
-PINPUTMode(23,GPIO.OUTPUT);
-PINPUTMode(25,GPIO.OUTPUT);
-PINPUTMode(12,GPIO.OUTPUT);
-PINPUTMode(2,GPIO.OUTPUT);
-PINPUTMode(3,GPIO.OUTPUT);
+PinMode(18,GPIO.OUTPUT);
+PinMode(23,GPIO.OUTPUT);
+PinMode(25,GPIO.OUTPUT);
+PinMode(12,GPIO.OUTPUT);
+PinMode(2,GPIO.OUTPUT);
+PinMode(3,GPIO.OUTPUT);
 
-  GPIO.OUTPUTput(18, GPIO.LOW); //Initialize
-  GPIO.OUTPUTput(23, GPIO.LOW);
-  GPIO.OUTPUTput(25, GPIO.LOW);
-  GPIO.OUTPUTput(12, GPIO.LOW);
-  GPIO.OUTPUTput(2, GPIO.LOW);
-  GPIO.OUTPUTput(3, GPIO.LOW);
+  digitalWrite(18, GPIO.LOW); //Initialize
+  digitalWrite(23, GPIO.LOW);
+  digitalWrite(25, GPIO.LOW);
+  digitalWrite(12, GPIO.LOW);
+  digitalWrite(2, GPIO.LOW);
+  digitalWrite(3, GPIO.LOW);
