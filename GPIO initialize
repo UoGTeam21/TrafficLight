@@ -50,6 +50,9 @@ PinMode(3,GPIO.OUTPUT);
 digitalWrite(3, GPIO.LOW);
 }
 
+#include<wiringPi.h>
+#include<stdio.h>
+
 redEW=18; // Pin 12
 redSN=23; // Pin 16
 greenEW=25; // Pin 22
@@ -60,10 +63,7 @@ sider=5; // Pin 29 BCM !!!
 sideg=6; // Pin 31 BCM !!!
 extrasensor1=4;//Pin 16
 extrasensor2=5;//Pin 18
-  INPUTt flag=0;
-  
-  import RPi.GPIO as GPIO
-  import time  
+
 PinMode(18,GPIO.OUTPUT);
 PinMode(23,GPIO.OUTPUT);
 PinMode(25,GPIO.OUTPUT);
