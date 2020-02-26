@@ -1,79 +1,79 @@
- void SNsensorini()
+void SNsensorini()
  {
-GPIO.setup(12,GPIO.IN)
-GPIO.setup(18,GPIO.IN)
-GPIO.setup(2,GPIO.IN)
-GPIO.setup(3,GPIO.IN)
+PINPUTMode(12,GPIO.INPUT)
+PINPUTMode(18,GPIO.INPUT)
+PINPUTMode(2,GPIO.INPUT)
+PINPUTMode(3,GPIO.INPUT)
  }
 
   void EWsesorini()
 {
-GPIO.setup(23,GPIO.IN)
-GPIO.setup(25,GPIO.IN)
-GPIO.setup(4,GPIO.IN)
-GPIO.setup(5,GPIO.IN)
+PINPUTMode(23,GPIO.INPUT)
+PINPUTMode(25,GPIO.INPUT)
+PINPUTMode(4,GPIO.INPUT)
+PINPUTMode(5,GPIO.INPUT)
 }
 
 void redEWini()
 {
-GPIO.setup(18,GPIO.OUT);
-GPIO.output(18, GPIO.LOW);
+PINPUTMode(18,GPIO.OUTPUT);
+GPIO.OUTPUTput(18, GPIO.LOW);
 }
 
 void redSNini()
 {
-GPIO.setup(23,GPIO.OUT);
-GPIO.output(23, GPIO.LOW);
+PINPUTMode(23,GPIO.OUTPUT);
+GPIO.OUTPUTput(23, GPIO.LOW);
 }
 
 void greenEWini()
 {
-GPIO.setup(25,GPIO.OUT);
-GPIO.output(23, GPIO.LOW);
+PINPUTMode(25,GPIO.OUTPUT);
+GPIO.OUTPUTput(23, GPIO.LOW);
 }
 
 void greenSNini()
 {
-GPIO.setup(12,GPIO.OUT);
-GPIO.output(12, GPIO.LOW);
+PINPUTMode(12,GPIO.OUTPUT);
+GPIO.OUTPUTput(12, GPIO.LOW);
 }
 
 void yellowEWini()
 {
-GPIO.setup(2,GPIO.OUT);
-GPIO.output(2, GPIO.LOW);
+PINPUTMode(2,GPIO.OUTPUT);
+GPIO.OUTPUTput(2, GPIO.LOW);
 }
 
 void yellowSNini()
 {
-GPIO.setup(3,GPIO.OUT);
-GPIO.output(3, GPIO.LOW);
+PINPUTMode(3,GPIO.OUTPUT);
+GPIO.OUTPUTput(3, GPIO.LOW);
 }
 
- int redEW=18; // pin 12
-  int redSN=23; // pin 16
-  int greenEW=25; // pin 22
-  int greenSN=12; // pin 32
-  int yellowEW=2; // pin 3
-  int yellowSN=3; // pin 5
-  int sider=5; // pin 29 BCM !!!
-  int sideg=6; // pin 31 BCM !!!
-  int extrasensor1=4;//pin 16
-  int extrasensor2=5;//pin 18
-  int flag=0;
+ INPUTt redEW=18; // pINPUT 12
+  INPUTt redSN=23; // pINPUT 16
+  INPUTt greenEW=25; // pINPUT 22
+  INPUTt greenSN=12; // pINPUT 32
+  INPUTt yellowEW=2; // pINPUT 3
+  INPUTt yellowSN=3; // pINPUT 5
+  INPUTt sider=5; // pINPUT 29 BCM !!!
+  INPUTt sideg=6; // pINPUT 31 BCM !!!
+  INPUTt extrasensor1=4;//pINPUT 16
+  INPUTt extrasensor2=5;//pINPUT 18
+  INPUTt flag=0;
   
   import RPi.GPIO as GPIO
   import time  
-GPIO.setup(18,GPIO.OUT);
-GPIO.setup(23,GPIO.OUT);
-GPIO.setup(25,GPIO.OUT);
-GPIO.setup(12,GPIO.OUT);
-GPIO.setup(2,GPIO.OUT);
-GPIO.setup(3,GPIO.OUT);
+PINPUTMode(18,GPIO.OUTPUT);
+PINPUTMode(23,GPIO.OUTPUT);
+PINPUTMode(25,GPIO.OUTPUT);
+PINPUTMode(12,GPIO.OUTPUT);
+PINPUTMode(2,GPIO.OUTPUT);
+PINPUTMode(3,GPIO.OUTPUT);
 
-  GPIO.output(18, GPIO.LOW); //initialize
-  GPIO.output(23, GPIO.LOW);
-  GPIO.output(25, GPIO.LOW);
-  GPIO.output(12, GPIO.LOW);
-  GPIO.output(2, GPIO.LOW);
-  GPIO.output(3, GPIO.LOW);
+  GPIO.OUTPUTput(18, GPIO.LOW); //Initialize
+  GPIO.OUTPUTput(23, GPIO.LOW);
+  GPIO.OUTPUTput(25, GPIO.LOW);
+  GPIO.OUTPUTput(12, GPIO.LOW);
+  GPIO.OUTPUTput(2, GPIO.LOW);
+  GPIO.OUTPUTput(3, GPIO.LOW);
