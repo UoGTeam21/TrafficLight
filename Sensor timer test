@@ -30,6 +30,7 @@ sleep(0.01);
 if(t>=1)
 {
 digitalWrite (23,1);    //operate timer
+t=0;
 }
 }
 }
