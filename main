@@ -1,77 +1,131 @@
-# TrafficLight
-#include<iostream>
-  #include <siringPi.h>
-  #include<stdio.h>
-  #include<stdlib.h>
-using namespace std;
-  import RPi.GPIO as GPIO
-import time
-GPIO.setmode(GPIO.BCM)
-  sensor= ;    //sensor GPIO code
-GPIO.setup(sensor,GPIO.IN) 
+void SNsensorini()
+ {
+PinMode(12,GPIO.INPUT)
+PinMode(18,GPIO.INPUT)
+PinMode(2,GPIO.INPUT)
+PinMode(3,GPIO.INPUT)
+ }
+
+  void EWsesorini()
+{
+PinMode(23,GPIO.INPUT)
+PinMode(25,GPIO.INPUT)
+PinMode(4,GPIO.INPUT)
+PinMode(5,GPIO.INPUT)
+}
+
+void redEWini()
+{
+PinMode(18,GPIO.OUTPUT);
+digitalWrite(18, GPIO.LOW);
+}
+
+void redSNini()
+{
+PinMode(23,GPIO.OUTPUT);
+digitalWrite(23, GPIO.LOW);
+}
+
+void greenEWini()
+{
+PinMode(25,GPIO.OUTPUT);
+digitalWrite(23, GPIO.LOW);
+}
+
+void greenSNini()
+{
+PinMode(12,GPIO.OUTPUT);
+digitalWrite(12, GPIO.LOW);
+}
+
+void yellowEWini()
+{
+PinMode(2,GPIO.OUTPUT);
+digitalWrite(2, GPIO.LOW);
+}
+
+void yellowSNini()
+{
+PinMode(3,GPIO.OUTPUT);
+digitalWrite(3, GPIO.LOW);
+}
+
+#include<wiringPi.h>
+#include<stdio.h>
 
 int main()
   {
-  int redEW=18; // pin 12
-  int redSN=23; // pin 16
-  int greenEW=25; // pin 22
-  int greenSN=12; // pin 32
-  int yellowEW=2; // pin 3
-  int yellowSN=3; // pin 5
-  int sider=5; // pin 29
-  int sideg=6; // pin 31
-  int flag=0;
-  
-  import RPi.GPIO as GPIO
-  import time  
-GPIO.setup(18,GPIO.OUT)
-GPIO.setup(23,GPIO.OUT)
-GPIO.setup(25,GPIO.OUT)
-GPIO.setup(12,GPIO.OUT)
-GPIO.setup(2,GPIO.OUT)
-GPIO.setup(3,GPIO.OUT)
+redEW=18; // Pin 12
+redSN=23; // Pin 16
+greenEW=25; // Pin 22
+greenSN=12; // Pin 32
+yellowEW=2; // Pin 3
+yellowSN=3; // Pin 5
+sider=5; // Pin 29 BCM !!!
+sideg=6; // Pin 31 BCM !!!
+extrasensor1=4;//Pin 16
+extrasensor2=5;//Pin 18
 
-  GPIO.output(18, GPIO.LOW); //initialize
-  GPIO.output(23, GPIO.LOW);
-  GPIO.output(25, GPIO.LOW);
-  GPIO.output(12, GPIO.LOW);
-  GPIO.output(2, GPIO.LOW);
-  GPIO.output(3, GPIO.LOW);
+PinMode(18,GPIO.OUTPUT);
+PinMode(23,GPIO.OUTPUT);
+PinMode(25,GPIO.OUTPUT);
+PinMode(12,GPIO.OUTPUT);
+PinMode(2,GPIO.OUTPUT);
+PinMode(3,GPIO.OUTPUT);
+
+  digitalWrite(18, GPIO.LOW); //Initialize
+  digitalWrite(23, GPIO.LOW);
+  digitalWrite(25, GPIO.LOW);
+  digitalWrite(12, GPIO.LOW);
+  digitalWrite(2, GPIO.LOW);
+  digitalWrite(3, GPIO.LOW);
   
  
   while (1)
   {
   int tr,tg,ty; //timing
+  
+  redSNini();
+  redEWini();
   for (tr=5,tr>0,tr--)
   {
-  GPIO.output(18, GPIO.HIGH);
-  GPIO.output(23, GPIO.HIGH);
-  GPIO.output(5, GPIO.HIGH); // all red
+  digitalWrite(18,1);
+  digitalWrite(23, 1);
+  digitalWrite(5, 1); // all red
   }
   
+  greenEWini();
+  redSNini();
   for(tgEW=10,tgEW>0,tgEW--)
-  {
-   GPIO.output(25, GPIO.HIGH);
-  GPIO.output(23, GPIO.HIGH);
-  GPIO.output(5, GPIO.HIGH); //EW green, else red
+{
+   digitalWrite(25, 1);
+  digitalWrite(23, 1);
+  digitalWrite(5, 1); //EW green, else red
 }
+
+redSNini();
 for(tyEW=3,tyEW>0,tyEW--)
  {
-  GPIO.output(2, GPIO.HIGH);
-  GPIO.output(23, GPIO.HIGH);
-  GPIO.output(5, GPIO.HIGH); //EW yellow, else red
+ digitalWrite(2, 1);
+  digitalWrite(23, 1);
+  digitalWrite(5, 1); //EW yellow, else red
   }
+  
+  redEWini();
+  greenSNini();
     for(tgSN=10,tgSN>0,tgSN--)
   {
-   GPIO.output(18, GPIO.HIGH);
-  GPIO.output(12, GPIO.HIGH);
-  GPIO.output(5, GPIO.HIGH); //SN green, else red
-}
+  digitalWrite(18, 1);
+ digitalWrite(12, 1);
+  digitalWrite(5, 1); //SN green, else red
+   }
+   
+   redEWini();
 for(tySN=3,tySN>0,tySN--)
  {
-  GPIO.output(18, GPIO.HIGH);
-  GPIO.output(3, GPIO.HIGH);
-  GPIO.output(5, GPIO.HIGH); //SN yellow, else red
+  digitalWrite(18, 1);
+  digitalWrite(3, 1);
+  digitalWrite(5, 1); //SN yellow, else red
   }
   
 if(wiringPiSetup()<0) //初始化wiringPi库
@@ -95,9 +149,9 @@ if(wiringPiSetup()<0) //初始化wiringPi库
 {
     for(tgside=10,tgEW>0,tgEW--)
   {
-   GPIO.output(18, GPIO.HIGH);
-  GPIO.output(23, GPIO.HIGH);
-  GPIO.output(6, GPIO.HIGH); //side green, else red
+  digitalWrite(18, 1);
+  digitalWrite(23, 1);
+  digitalWrite(6, 1); //side green, else red
 }
 flag=0;
 }
@@ -114,56 +168,4 @@ sleep(1)
 void button()
 {
 flag=1;
-}
-
- void SNsensorini()
- {
-GPIO.setup(12,GPIO.IN)
-GPIO.setup(18,GPIO.IN)
-GPIO.setup(2,GPIO.IN)
-GPIO.setup(3,GPIO.IN)
- }
-
-  void EWsesorini()
-{
-GPIO.setup(23,GPIO.IN)
-GPIO.setup(25,GPIO.IN)
-GPIO.setup(4,GPIO.IN)
-GPIO.setup(5,GPIO.IN)
-}
-
-void redEWini()
-{
-GPIO.setup(18,GPIO.OUT);
-GPIO.output(18, GPIO.LOW);
-}
-
-void redSNini()
-{
-GPIO.setup(23,GPIO.OUT);
-GPIO.output(23, GPIO.LOW);
-}
-
-void greenEWini()
-{
-GPIO.setup(25,GPIO.OUT);
-GPIO.output(23, GPIO.LOW);
-}
-
-void greenSNini()
-{
-GPIO.setup(12,GPIO.OUT);
-GPIO.output(12, GPIO.LOW);
-}
-
-void yellowEWini()
-{
-GPIO.setup(2,GPIO.OUT);
-GPIO.output(2, GPIO.LOW);
-}
-
-void yellowSNini()
-{
-GPIO.setup(3,GPIO.OUT);
-GPIO.output(3, GPIO.LOW);
 }
