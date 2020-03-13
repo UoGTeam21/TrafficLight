@@ -1,0 +1,2 @@
+/home/pi/git/advanced/Trafficlight/main1/CMakeFiles/rebuild_cache.dir
+/home/pi/git/advanced/Trafficlight/main1/CMakeFiles/edit_cache.dir
