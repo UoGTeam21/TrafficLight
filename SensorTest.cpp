@@ -3,19 +3,22 @@
 
 void SNsensorini()
  {
-PinMode(12,GPIO.INPUT)
-PinMode(18,GPIO.INPUT)
-PinMode(2,GPIO.INPUT)
-PinMode(3,GPIO.INPUT)
+PinMode(5,GPIO.INPUT)
+PinMode(6,GPIO.INPUT)
+PinMode(4,GPIO.INPUT)
+PinMode(21,GPIO.INPUT)
+ GetnewtEW();//EW green, and SN sensortimer star (SN RED)
  }
 
-void EWsesorini()
+  void EWsesorini()
 {
-PinMode(23,GPIO.INPUT)
-PinMode(25,GPIO.INPUT)
-PinMode(4,GPIO.INPUT)
-PinMode(5,GPIO.INPUT)
-}
+PinMode(27,GPIO.INPUT)
+PinMode(26,GPIO.INPUT)
+PinMode(1,GPIO.INPUT)
+PinMode(21,GPIO.INPUT)
+ GetnewtSN();//SN  green, and EW sensortimer star (EW RED)
+ }
+
 
 
 int main()
