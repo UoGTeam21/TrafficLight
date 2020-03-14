@@ -1,36 +1,48 @@
-#include<WiringPi.h>
+
+#include<wiringPi.h>
 #include<stdio.h>
 
 void SNsensorini()
  {
-PinMode(5,GPIO.INPUT)
-PinMode(6,GPIO.INPUT)
-PinMode(4,GPIO.INPUT)
-PinMode(21,GPIO.INPUT)
- GetnewtEW();//EW green, and SN sensortimer star (SN RED)
+pinMode(5,INPUT);
+pinMode(6,INPUT);
+pinMode(4,INPUT);
+pinMode(21,INPUT);
  }
 
-  void EWsesorini()
+  void EWsensorini()
 {
-PinMode(27,GPIO.INPUT)
-PinMode(26,GPIO.INPUT)
-PinMode(1,GPIO.INPUT)
-PinMode(21,GPIO.INPUT)
- GetnewtSN();//SN  green, and EW sensortimer star (EW RED)
- }
+pinMode(27,INPUT);
+pinMode(26,INPUT);
+pinMode(1,INPUT);
+pinMode(21,INPUT);
+}
 
 
 
 int main()
 {
+wiringPiSetup();
 SNsensorini();
 EWsensorini();
-PinMode(23,GPIO.OUTPUT);
+pinMode(23,OUTPUT);
+pinMode(1,INPUT);
 
 for(;;)
 {
-if(digitalRead (5) == 1)
-digitalWrite (23,1);
+
+if (digitalRead(1)==HIGH)
+{
+digitalWrite (23,HIGH);
+delay(1000);
+}
+
+if (digitalRead(1)==LOW)
+{
+digitalWrite (23,LOW);
+delay(1000);
+}
+
 }
 return 0;
 }
