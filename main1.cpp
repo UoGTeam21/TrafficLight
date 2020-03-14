@@ -17,19 +17,19 @@
 
 void SNsensorini()
  {
-PinMode(12,GPIO.INPUT)
-PinMode(18,GPIO.INPUT)
-PinMode(2,GPIO.INPUT)
-PinMode(3,GPIO.INPUT)
+PinMode(5,GPIO.INPUT)
+PinMode(6,GPIO.INPUT)
+PinMode(4,GPIO.INPUT)
+PinMode(21,GPIO.INPUT)
  GetnewtEW();//EW green, and SN sensortimer star (SN RED)
  }
 
   void EWsesorini()
 {
-PinMode(23,GPIO.INPUT)
-PinMode(25,GPIO.INPUT)
-PinMode(4,GPIO.INPUT)
-PinMode(5,GPIO.INPUT)
+PinMode(27,GPIO.INPUT)
+PinMode(26,GPIO.INPUT)
+PinMode(1,GPIO.INPUT)
+PinMode(21,GPIO.INPUT)
  GetnewtSN();//SN  green, and EW sensortimer star (EW RED)
  }
 
@@ -56,8 +56,8 @@ digitalWrite(4, GPIO.LOW);
 
 void greenEWini()
 {
-PinMode(25,GPIO.OUTPUT);
-digitalWrite(23, GPIO.LOW);
+PinMode(6,GPIO.OUTPUT);
+digitalWrite(6, GPIO.LOW);
   redEWini();
  redSNini();
    yellowEWini();
@@ -74,7 +74,7 @@ digitalWrite(26, GPIO.LOW);
    yellowSNini();
 }
 
-void yellowEWini()
+void yellowSNini()
 {
 PinMode(2,GPIO.OUTPUT);
 digitalWrite(2, GPIO.LOW);
@@ -84,7 +84,7 @@ digitalWrite(2, GPIO.LOW);
    greenSNini();
 }
 
-void yellowSNini()
+void yellowEWini()
 {
 PinMode(3,GPIO.OUTPUT);
 digitalWrite(3, GPIO.LOW);
@@ -96,8 +96,8 @@ digitalWrite(3, GPIO.LOW);
 
 void Button()// check the button
 {
-  pinMode(11,GPIO.INPUT); //引脚0为BUTTON输入模式
-  pullUpDnControl(11,PUD_UP); //设置0号引脚上拉,(设置成上拉输入，引脚上就加了一个上拉电阻，那么引脚就默认是高电平，当再去读取这个引脚的时候，
+  pinMode(0,GPIO.INPUT); //引脚0为BUTTON输入模式
+  pullUpDnControl(0,PUD_UP); //设置0号引脚上拉,(设置成上拉输入，引脚上就加了一个上拉电阻，那么引脚就默认是高电平，当再去读取这个引脚的时候，
  //就可以检测到低电平了)
 }
 
@@ -118,7 +118,7 @@ delay(10);  //sleep(0.01)=10ms
 while(digitalRead(12==1)&&digitalRead(18==1));// has input signals
 }
 
-*/void sensortimer()
+void sensortimer()
 {
 PinMode(23,GPIO.OUTPUT);// pinmode (int pin, int mode), computer control it by 23
 int t1,t=0;
@@ -133,9 +133,9 @@ delay(10);  //sleep(0.01)=10ms
 }while(digitalRead(12==1)&&digitalRead(18==1));// has input signals
     digitalWrite (23,1); //operate timer;// digitalwrite(int pin, int value)// if value != 0 == high)
      t=0;
-}
+*/}
 
- void GetnewtEW()
+ */void GetnewtEW()
  {
   if(t<=1)
   {
@@ -185,20 +185,6 @@ delay(10);  //sleep(0.01)=10ms
   printf("you set up wiringpi failed"); //failed
   return 1;
  }
-
-PinMode(1,GPIO.OUTPUT);
-PinMode(4,GPIO.OUTPUT);
-PinMode(6,GPIO.OUTPUT);
-PinMode(26,GPIO.OUTPUT);
-PinMode(2,GPIO.OUTPUT);
-PinMode(3,GPIO.OUTPUT);
-
-  digitalWrite(1, GPIO.LOW); //Initialize
-  digitalWrite(4, GPIO.LOW);
-  digitalWrite(6, GPIO.LOW);
-  digitalWrite(26, GPIO.LOW);
-  digitalWrite(2, GPIO.LOW);
-  digitalWrite(3, GPIO.LOW);
   
  
    while true // intialize succeed
@@ -210,7 +196,7 @@ PinMode(3,GPIO.OUTPUT);
   {
   digitalWrite(1,1);
   digitalWrite(4, 1);
-  digitalWrite(5, 1); // all red
+  digitalWrite(21, 1); // all red
   }
   
   greenEWini();
@@ -230,7 +216,7 @@ for(tyEW=3,tyEW>0,tyEW--)
  {
  digitalWrite(2, 1);
   //digitalWrite(4, 1);
-  digitalWrite(5, 1); //EW yellow, else red
+  //digitalWrite(5, 1); //EW yellow, else red
   }
   
   redEWini();
@@ -240,7 +226,7 @@ for(tyEW=3,tyEW>0,tyEW--)
   {
   digitalWrite(1, 1);
  digitalWrite(26, 1);
-  digitalWrite(5, 1); //SN green, else red;
+  digitalWrite(27, 1); //SN green, else red;
    }
    
   yelloeSNini();
@@ -249,7 +235,7 @@ for(tySN=3,tySN>0,tySN--)
  {
   //digitalWrite(1, 1);
   digitalWrite(3, 1);
-  digitalWrite(5, 1); //SN yellow, else red
+  //digitalWrite(5, 1); //SN yellow, else red
    sensortimer();
  }
     
