@@ -1,3 +1,6 @@
+#include<WiringPi.h>
+#include<stdio.h>
+
 void SNsensorini()
  {
 PinMode(12,GPIO.INPUT)
@@ -14,8 +17,6 @@ PinMode(4,GPIO.INPUT)
 PinMode(5,GPIO.INPUT)
 }
 
-#include<WiringPi.h>
-#include<stdio.h>
 
 int main()
 {
