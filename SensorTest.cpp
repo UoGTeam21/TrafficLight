@@ -29,7 +29,7 @@ PinMode(23,GPIO.OUTPUT);
 
 for(;;)
 {
-if(digitalRead (3) == 0)
+if(digitalRead (5) == 1)
 digitalWrite (23,1);
 }
 return 0;
