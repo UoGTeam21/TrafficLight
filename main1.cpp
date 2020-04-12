@@ -15,25 +15,25 @@
 #define button 11//Pin 11
 
 
-void SNsensorini()
+void SNsensorini()//initiallise South-North side sensors 
  {
 PinMode(5,GPIO.INPUT)
 PinMode(6,GPIO.INPUT)
 PinMode(4,GPIO.INPUT)
 PinMode(21,GPIO.INPUT)
- GetnewtEW();//EW green, and SN sensortimer star (SN RED)
+ GetnewtEW();//East-West side turn to green light, and South-North sensortimer star (South-North side turn to red light)
  }
 
-  void EWsesorini()
+  void EWsesorini()//initiallise East-West side sensors 
 {
 PinMode(27,GPIO.INPUT)
 PinMode(26,GPIO.INPUT)
 PinMode(1,GPIO.INPUT)
 PinMode(21,GPIO.INPUT)
- GetnewtSN();//SN  green, and EW sensortimer star (EW RED)
+ GetnewtSN();//South-North green light, and East-West sensortimer star (East-West red light)
  }
 
-void redEWini()
+void redEWini()//initiallise East-West side red light 
 {
 PinMode(1,GPIO.OUTPUT);
 digitalWrite(1, GPIO.LOW);
@@ -41,64 +41,64 @@ digitalWrite(1, GPIO.LOW);
   greenEWini();
    greenSNini();
    yellowEWini();
-   yellowSNini();
+   yellowSNini();//turn on East-West side red light,turn off other lights
 }
 
-void redSNini()
+void redSNini()//initiallise South-North side red light
 {
 PinMode(4,GPIO.OUTPUT);
 digitalWrite(4, GPIO.LOW);
   greenEWini();
    greenSNini();
    yellowEWini();
-   yellowSNini();
+   yellowSNini();//turn on South-North side red light,turn off other lights
 }
 
-void greenEWini()
+void greenEWini()//initiallise East-West side green light 
 {
 PinMode(6,GPIO.OUTPUT);
 digitalWrite(6, GPIO.LOW);
   redEWini();
  redSNini();
    yellowEWini();
-   yellowSNini();
+   yellowSNini();//turn on East-West side green light,turn off other lights
 }
 
-void greenSNini()
+void greenSNini()//initiallise South-North side green light
 {
 PinMode(26,GPIO.OUTPUT);
 digitalWrite(26, GPIO.LOW);
   redEWini();
  redSNini();
    yellowEWini();
-   yellowSNini();
+   yellowSNini();//turn on South-North side green light,turn off other lights
 }
 
-void yellowSNini()
+void yellowSNini()//initiallise South-North side yellow light
 {
 PinMode(2,GPIO.OUTPUT);
 digitalWrite(2, GPIO.LOW);
   redEWini();
  redSNini();
   greenEWini();
-   greenSNini();
+   greenSNini();//turn on South-North side yellow light,turn off other lights
 }
 
-void yellowEWini()
+void yellowEWini()//initiallise East-West side yellow light 
 {
 PinMode(3,GPIO.OUTPUT);
 digitalWrite(3, GPIO.LOW);
   redEWini();
  redSNini();
   greenEWini();
-   greenSNini();
+   greenSNini();//turn on East-West side yellow light,turn off other lights
 }
 
 void Button()// check the button
 {
-  pinMode(0,GPIO.INPUT); //引脚0为BUTTON输入模式
+  pinMode(0,GPIO.INPUT); //引脚0为BUTTON输入模式set pin.0 to button input mode
   pullUpDnControl(0,PUD_UP); //设置0号引脚上拉,(设置成上拉输入，引脚上就加了一个上拉电阻，那么引脚就默认是高电平，当再去读取这个引脚的时候，
- //就可以检测到低电平了)
+ //就可以检测到低电平了)set pin.0 pull-up
 }
 
 /*1.void sensortimer()
@@ -196,17 +196,17 @@ delay(10);  //sleep(0.01)=10ms
   {
   digitalWrite(1,1);
   digitalWrite(4, 1);
-  digitalWrite(21, 1); // all red
+  digitalWrite(21, 1); //set all lights red
   }
   
   greenEWini();
   redSNini();
-  SNsensorini(); //EW green, and SN sensortimer star 
+  SNsensorini(); //East-West side green lights, South-North side sensortimer start to work and South-North side lights turn to red   
   for(tgEW=10,tgEW>0,tgEW--)
 {
    digitalWrite(6, 1);
   digitalWrite(4, 1);
-  digitalWrite(5, 1); //EW green, else red
+  digitalWrite(5, 1); //East-West light green, else red
    sensortimer();
 }
 
@@ -216,17 +216,17 @@ for(tyEW=3,tyEW>0,tyEW--)
  {
  digitalWrite(2, 1);
   //digitalWrite(4, 1);
-  //digitalWrite(5, 1); //EW yellow, else red
+  //digitalWrite(5, 1); //East-West light yellow, else red
   }
   
   redEWini();
   greenSNini();
-   EWsesorini(); // SN green, and EW sensortimer star 
+   EWsesorini(); // South-North light green, East-West sensortimer start and East-West light red
     for(tgSN=10,tgSN>0,tgSN--)
   {
   digitalWrite(1, 1);
  digitalWrite(26, 1);
-  digitalWrite(27, 1); //SN green, else red;
+  digitalWrite(27, 1); //South-North light green, else red;
    }
    
   yelloeSNini();
@@ -235,11 +235,11 @@ for(tySN=3,tySN>0,tySN--)
  {
   //digitalWrite(1, 1);
   digitalWrite(3, 1);
-  //digitalWrite(5, 1); //SN yellow, else red
+  //digitalWrite(5, 1); //South-North light yellow, else red
    sensortimer();
  }
     
-  if(digitalRead(0) == 0)// 检测到低电平
+  if(digitalRead(0) == 0)// 检测到低电平check the low level input
      {
         delay(20); // 延时销抖, for machine button 
         if(digitalRead(0) == 0)// 检测到低电平
@@ -259,7 +259,7 @@ for(tySN=3,tySN>0,tySN--)
   {
   digitalWrite(1, 1);
   digitalWrite(4, 1);
-  digitalWrite(6, 1); //side green, else red
+  digitalWrite(6, 1); //sidewalk light green, main road traffic light turned to red
     }
  return 0;
  }
