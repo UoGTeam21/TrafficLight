@@ -46,8 +46,8 @@ digitalWrite(6, LOW);
 
 void yellowEWini()
 {
-PinMode(3,OUTPUT);
-digitalWrite(3, LOW);
+PinMode(2,OUTPUT);
+digitalWrite(2, LOW);
 }
  
   virtual void CounterGR()// EW绿灯亮 
@@ -71,7 +71,7 @@ digitalWrite(3, LOW);
  //redSNini();
 for(tyEW=3;tyEW>0;tyEW--)
  {
- digitalWrite(2, 1);//digitalWrite(4, 1); //digitalWrite(5, 1); //EW yellow, else red(不用）
+ digitalWrite(2, 1);//digitalWrite(4, 1); //digitalWrite(5, 1); //EW yellow, else red
    }
   public: 
   static int tg;
@@ -103,15 +103,15 @@ digitalWrite(26, LOW);
 }
 void yellowSNini()
 {
-PinMode(2,OUTPUT);
-digitalWrite(2, LOW);
+PinMode(3,OUTPUT);
+digitalWrite(3, LOW);
 } 
 
   virtual void CounterGR(SensorES& obj)// SN绿灯亮
     {
    redEWini();
   greenSNini();
-   EWsesorini(); // SN green, and EW sensortimer star 
+   EWsesorini(); // SN green, and EW sensortimer start 
   for(tgEW=CarLightEW::tg; tgSN>0; tgSN--)
    {
      digitalWrite(1, 1);
@@ -150,7 +150,7 @@ class SensorES{
    do {
    t=t+0.01;
    ds delay(10);  //sleep(0.01)=10ms
-  }while(digitalRead(12)==(1)&& t0>0);// has input signals been blocked
+  }while(digitalRead(27)==1 && t0>0);// has input signals been blocked
     }
   virtual int outputT()
     { 
@@ -174,7 +174,7 @@ class SensorWN: public SensorES
    do{
    t2=t2+0.01;
    ds delay(10);  //sleep(0.01)=10ms
-  }while(digitalRead(18==(1) && t1>0);// has input signals
+  }while(digitalRead((5)==1 && t1>0);// has input signals
     }
   virtual int outputT()
     {  
@@ -219,13 +219,13 @@ class Button{
      {b.CheckB();}
    void WLighting()
    { 
-     tw=CheckB();//digitalWrite(18, GPIO.HIGH); // all side greenlight lighting
+     tw=CheckB();//digitalWrite(22, GPIO.HIGH); // all side greenlight lighting
      if(tw=1){
     for(tgside=10;tgside>0;tgside--)
   {
   digitalWrite(1, 1);
   digitalWrite(4, 1);
-  digitalWrite(6, 1); //side green, else red
+  digitalWrite(22, 1); //side green, else red
     }
      }
      void WNLighting(){
@@ -233,7 +233,7 @@ class Button{
       {
    digitalWrite(1, LOW);// no signal was checked, no light respon
        digitalWrite(4, LOW);
-       digitalWrite(6, LOW);
+       digitalWrite(22, LOW);
         }
      }
   void Setflag()
