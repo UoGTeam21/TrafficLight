@@ -7,17 +7,17 @@
 #include<mutex>
 using namespace std;
 
-#define redEW 18 // Pin 12
-#define redSN 23 // Pin 16
-#define greenEW 25 // Pin 22
-#define greenSN 12 // Pin 32
+#define redEW 1 // Pin 12(wiringPi)
+#define redSN 4 // Pin 16
+#define greenEW 6 // Pin 22
+#define greenSN 26 // Pin 32
 #define yellowEW 2// Pin 13
 #define yellowSN 3 // Pin 15
-#define sider 5// Pin 29 BCM !!!
-#define sideg 6// Pin 31 BCM !!!
-#define extrasensor1 4//Pin 16
-#define extrasensor2 5 //Pin 18
-#define button 11//Pin 11
+#define sider 21// Pin 29 
+#define sideg 22// Pin 31 
+#define sensorEW 27//Pin 36
+#define sensorSN 5 //Pin 18
+#define button 0//Pin 11
 
 class CarLightEW // 车行道红绿灯
 {
