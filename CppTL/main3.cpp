@@ -61,7 +61,7 @@ digitalWrite(3, LOW);
   digitalWrite(4, 1);
   digitalWrite(5, 1); //EW green, else red
      tg--;
-    if(CarLightEW::tg<=5 && tg>0)// counterv t can not exceed 1 minutes?
+    if(tg<=5 && tg>0)// counterv t can not exceed 1 minutes?
       { obj.InputT();}// 五秒倒计时开始传+ //sensortimer();
      }
    
@@ -160,7 +160,7 @@ class SensorES{
     int t;
     static int t0;
 
-class SensorWN: punlic SensorES 
+class SensorWN: public SensorES 
 {
   SensorES(){
      t1=0;
