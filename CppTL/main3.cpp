@@ -150,7 +150,7 @@ class SensorES{
    do {
    t=t+0.01;
    ds delay(10);  //sleep(0.01)=10ms
-  }while(digitalRead(12)==(1)&& t0>0);// has input signals 被遮挡
+  }while(digitalRead(12)==(1)&& t0>0);// has input signals been blocked
     }
   virtual int outputT()
     { 
