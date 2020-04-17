@@ -49,21 +49,22 @@ void yellowEWini()
 PinMode(2,OUTPUT);
 digitalWrite(2, LOW);
 }
-  /*virtual int CounterGR()// SN绿灯亮
+ 
+ virtual int CounterGR()// SN绿灯亮
     {
    redEWini();
   greenSNini();
    EWsesorini(); // SN green, and EW sensortimer star 
-  for(tgEW=CarLightEW::tg; tgSN>0; tgSN--)
+ for(tgEW=CarLightEW::tg; tgSN>0; tgSN--)
    {
-     digitalWrite(1, 1);
-    digitalWrite(26, 1);
-    digitalWrite(27, 1); //SN green, else red;
-      CarLightEW::tg--;
-   return CarLightEW::tg;
+  digitalWrite(1, 1);
+ digitalWrite(26, 1);
+ digitalWrite(27, 1); //SN green, else red;
+ CarLightEW::tg--;
+  return CarLightEW::tg;
   //if(CarLightEW::tg<=5 && tg>0)// counterv t can not exceed 1 minutes?
       //{ obj.InputT();}// 五秒倒计时开始传
-    }*/
+    }
    
  virtual void CounterY() 
  {
