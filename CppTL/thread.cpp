@@ -50,21 +50,21 @@ PinMode(2,OUTPUT);
 digitalWrite(2, LOW);
 }
  
- virtual int CounterGR()// SN绿灯亮
+  virtual int CounterGR()// EW绿灯亮 
     {
-   redEWini();
-  greenSNini();
-   EWsesorini(); // SN green, and EW sensortimer star 
- for(tgEW=CarLightEW::tg; tgSN>0; tgSN--)
-   {
-  digitalWrite(1, 1);
- digitalWrite(26, 1);
- digitalWrite(27, 1); //SN green, else red;
- CarLightEW::tg--;
-  return CarLightEW::tg;
-  //if(CarLightEW::tg<=5 && tg>0)// counterv t can not exceed 1 minutes?
-      //{ obj.InputT();}// 五秒倒计时开始传
-    }
+    greenEWini();
+  redSNini();
+  //SNsensorini();变量调用构造函数初始化
+   for(tgEW=tg;tgEW>0;tgEW--)//EW green, and SN sensortimer star 
+{
+   digitalWrite(6, 1);
+  digitalWrite(4, 1);
+  digitalWrite(5, 1); //EW green, else red
+     tg--;
+    return tg;
+    //if(CarLightEW::tg<=5 && tg>0)// counterv t can not exceed 1 minutes?
+      //{ obj.InputT();}// 五秒倒计时开始传+ //sensortimer();
+     }
    
  virtual void CounterY() 
  {
