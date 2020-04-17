@@ -1,11 +1,18 @@
 //#include<WiringPi.h>
+WiringPi.h>
 #include<stdio.h>
 #include<iostream>
 #include<thread>
 #include<chrono>// for time delay in c++
-#include<list>
+//#include<list>
 #include<mutex>
 using namespace std;
+
+
+#include <type_traits>
+#ifndef _THREAD_
+#define _THREAD_
+#endif
 
 #define redEW 1 // Pin 12(wiringPi)
 #define redSN 4 // Pin 16
@@ -19,7 +26,7 @@ using namespace std;
 #define sensorSN 5 //Pin 18
 #define button 0//Pin 11
 
-class CarLightEW // East-West side main traffic light 
+class CarLightEW // 车行道红绿灯
 {
    public:
        static int tg;
@@ -35,6 +42,7 @@ class CarLightEW // East-West side main traffic light
         this->tgEW = tgEW;
         this->tyEW = tyEW;
     }
+
     /* void redEWini()
      {
          PinMode(1, OUTPUT);
@@ -175,6 +183,7 @@ class CarLightEW // East-West side main traffic light
             }
           private:
             int t;
+        public:
             int t0;
         };
 
@@ -182,8 +191,9 @@ class CarLightEW // East-West side main traffic light
         {
          private:
             int t2;
-            int t1;
+           
            public:
+               int t1;
             SensorWN()
             {
                 t1 = 0;
@@ -343,6 +353,7 @@ class CarLightEW // East-West side main traffic light
                     for (;;) {
                         m1.lock();
                         SW.GetT();
+                        while(SW.t1> 0);
                         sensor.lock();
                         SW.outputT();
                         sensor.unlock();
@@ -356,6 +367,7 @@ class CarLightEW // East-West side main traffic light
                     for (;;) {
                         m2.lock();
                         SE.GetT();// 不用再加锁，tg 来控制。
+                        while(SE.t0> 0);
                         sensor.lock();//共享一个23号口输出；
                         SE.outputT();
                         sensor.unlock();
@@ -369,6 +381,7 @@ class CarLightEW // East-West side main traffic light
                     for (;;) {
                         m3.lock();
                         SS.GetT();
+                        while (SS.t0 > 0);
                         sensor1.lock();
                         SS.outputT();
                         sensor1.unlock();
@@ -381,7 +394,8 @@ class CarLightEW // East-West side main traffic light
                 {
                     for (;;) {
                         m4.lock();
-                        SS.GetT();
+                        SN.GetT();
+                        while(SN.t1 > 0);
                         sensor1.lock();
                         SN.outputT();
                         sensor1.unlock();
