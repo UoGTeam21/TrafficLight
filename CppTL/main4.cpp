@@ -19,9 +19,9 @@ using namespace std;
 #define sensorSN 5 //Pin 18
 #define button 0//Pin 11
 
-class CarLightEW // 车行道红绿灯
+class CarLightEW // East-West side mian traffic light
 {
- friend void Gettg(CarLightEW*, SensorES &, SensorWN & );// 他的子函数不再需要有友元，因为tg为静态， 改变这个属性， 所有一起变。
+ friend void Gettg(CarLightEW*, SensorES &, SensorWN & );// 他的子函数不再需要有友元，因为tg为静态， 改变这个属性， 所有一起变。The subfunction do not need friend, tg is static
 public: 
   CarLightEW(int tgEW=0, int tyEW=3)
   { 
@@ -35,31 +35,31 @@ public:
   void redEWini()
 {
 PinMode(1,OUTPUT);
-digitalWrite(1, LOW);
+digitalWrite(1, LOW);// initialize East-West side red light 
 }
 
 void greenEWini()
 {
 PinMode(6,OUTPUT);
-digitalWrite(6, LOW);
+digitalWrite(6, LOW); // initialize East-West side green light
 }
 
 void yellowEWini()
 {
 PinMode(2,OUTPUT);
-digitalWrite(2, LOW);
+digitalWrite(2, LOW);// initialize East-West side yellow light
 }
  
-  virtual void CounterGR()// EW绿灯亮 
+  virtual void CounterGR()// turn on East-West side green light EW绿灯亮 
     {
     greenEWini();
   redSNini();
-  //SNsensorini();变量调用构造函数初始化
-   for(tgEW=tg;tgEW>0;tgEW--)//EW green, and SN sensortimer star 
+  //SNsensorini();变量调用构造函数初始化 initialize variable construction function
+   for(tgEW=tg;tgEW>0;tgEW--)//East-West side turn to green light, and South-North side sensortimer start to work 
 {
    digitalWrite(6, 1);
   digitalWrite(4, 1);
-  digitalWrite(5, 1); //EW green, else red
+  digitalWrite(5, 1); //East-West side green light, else sides red light
      tg--;
     if(CarLightEW::tg<=5 && tg>0)// counterv t can not exceed 1 minutes?
       { obj.InputT();}// 五秒倒计时开始传+ //sensortimer();
@@ -73,7 +73,7 @@ for(tyEW=3;tyEW>0;tyEW--)
  {
  digitalWrite(2, 1);
   //digitalWrite(4, 1);
-  //digitalWrite(5, 1); //EW yellow, else red
+  //digitalWrite(5, 1); //turn on the yellow light, else red light
   }
   public: 
   static int tg;
@@ -93,17 +93,17 @@ for(tyEW=3;tyEW>0;tyEW--)
        this->tgSN= tgSN;
        this->tySN= tySN;
      }
-   void redSNini()
+   void redSNini() // initialize South-North side red light
 {
 PinMode(4,OUTPUT);
 digitalWrite(4, LOW);
 }
-   void greenSNini()
+   void greenSNini() // initialize South-North side green light
 {
 PinMode(26,OUTPUT);
 digitalWrite(26, LOW);
 }
-void yellowSNini()
+void yellowSNini() // initialize South-North side yellow light
 {
 PinMode(3,OUTPUT);
 digitalWrite(3, LOW);
@@ -121,10 +121,10 @@ digitalWrite(3, LOW);
     digitalWrite(27, 1); //SN green, else red;
       CarLightEW::tg--;
   if(CarLightEW::tg<=5 && tg>0)// counterv t can not exceed 1 minutes?
-      { obj.InputT();}// 五秒倒计时开始传
+      { obj.InputT();}// 五秒倒计时开始传5 seconds countdown
     }
    
-virtual void CounterY() //黄灯亮
+virtual void CounterY() //turn on the yellow light黄灯亮
   {
   yelloeSNini();
 //redEWini();
@@ -132,7 +132,7 @@ virtual void CounterY() //黄灯亮
    {
   //digitalWrite(1, 1);
   digitalWrite(3, 1);
-  //digitalWrite(5, 1); //SN yellow, else red
+  //digitalWrite(5, 1); //South-North side yellow light, else red
    sensortimer();
    }
   private:
@@ -143,12 +143,12 @@ class SensorES{
    public: 
   SensorES(){
      t0=0;
-      t=0;//初始化
+      t=0;//初始化initialization
     PinMode(23,OUTPUT);
      }// pinmode (int pin, int mode), computer control it by 23
  void Input()
   {   
-  t0 = CarLight::tg;// ？！ 此处应该有锁！
+  t0 = CarLight::tg;// ？！ 此处应该有锁！set a clock
   }
   void GetT()
   {
@@ -194,24 +194,24 @@ class Button{
  private: int flag;
   public:
   friend class WalkLight;
-  Button(){//构造函数
+  Button(){//构造函数constructor
    int flag=0;
-    pinMode(0,INPUT); //引脚0为BUTTON输入模式
-  pullUpDnControl(0,PUD_UP); //设置0号引脚上拉,(设置成上拉输入，引脚上就加了一个上拉电阻，那么引脚就默认是高电平，当再去读取这个引脚的时候，
+    pinMode(0,INPUT); //引脚0为BUTTON输入模式set pin 0 to input mode
+  pullUpDnControl(0,PUD_UP); //Set pin 0 to pull up, so pin 0 defaults to high level设置0号引脚上拉,(设置成上拉输入，引脚上就加了一个上拉电阻，那么引脚就默认是高电平，当再去读取这个引脚的时候，
    }
  int CheckB()
   {
-    if(digitalRead(0) == 0)// 检测到低电平
+    if(digitalRead(0) == 0)// 检测到低电平detect low level signal
      {
-        delay(20); // 延时销抖, for machine button 
-        if(digitalRead(0) == 0)// 检测到低电平
+        delay(20); // 延时销抖Delay debounce, for machine button 
+        if(digitalRead(0) == 0)// 检测到低电平detect low level signal
         { flag= 1;}
    else 
        { flag=-1;}
      return flag;
        }
      
-   class WalkLight{
+   class WalkLight{  // define sidewalk traffic light
      int tgside;
      int tw;
      public:
@@ -230,7 +230,7 @@ class Button{
   {
   digitalWrite(1, 1);
   digitalWrite(4, 1);
-  digitalWrite(22, 1); //side green, else red
+  digitalWrite(22, 1); //sidewalk green light, else red
     }
      }
      void WNLighting(){
@@ -246,17 +246,17 @@ class Button{
   private: Button b;
      }
   
-  void YellowLight(CarLightEW*YL)//virtual黄灯运行，多态
+  void YellowLight(CarLightEW*YL)//virtual yellow light, polymorphism黄灯运行，多态
     { 
     YL->CounterY();
     }
  
-  void GRLight(CarLightEW*GRL)//virtual红绿灯灯运行，多态
+  void GRLight(CarLightEW*GRL)//virtual green & red light, polymorphism红绿灯灯运行，多态
      {
      GRL->CounterGR();
      }
      
-  int Newtg(SensorES & Ts)// sensor 输出的时间进行计算virtual， 多态
+  int Newtg(SensorES & Ts)//  calculate output sensor time, polymorphism 输出的时间进行计算virtual， 多态
    {
   if(Ts.outputT()<1)
   {
@@ -270,11 +270,11 @@ class Button{
   {
     return 20;//Tc.Gettg()+=10;
   }
- }// 以上为四个sensor线程需要的全部过程：输出时间并计算
+ }// 以上为四个sensor线程需要的全部过程：输出时间并计算output time and calculate for 4 sensor threds
  
-void Gettg(CarLightEW*pt, SensorES & Obj1, SensorWN & Obj2)// 作比较, 然后给重新给静态函数tg赋值 输入对象（同一个类的不同对象）
+void Gettg(CarLightEW*pt, SensorES & Obj1, SensorWN & Obj2)// 作比较, 然后给重新给静态函数tg赋值 输入对象（同一个类的不同对象）make comparison, then assign value to tg
 {
-  int pt->tg=0;//局部变量
+  int pt->tg=0;//局部变量 Local variables
   //SensorES tes; SensorWN twn;
   if(Newtg(Obj1)>=Newtg(Obj2))
   { 
