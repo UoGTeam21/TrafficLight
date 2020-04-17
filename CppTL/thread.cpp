@@ -352,7 +352,7 @@ void Gettg(CarLightEW*pt, SensorES & Obj1, SensorWN & Obj2)// 作比较, 然后�
       {    
        button.unlock();
      }
-     else{  
+     else if (WL.CheckB()=-1&&YellowLight(&CEW)=0){  
       WL.WNLighting();
      td::this_thread::sleep_for(std::chrono::milliseconds(500));//delay(500);
     car.unlock(); //对应的  car.lock() 在构造函数中；
@@ -372,7 +372,7 @@ void Gettg(CarLightEW*pt, SensorES & Obj1, SensorWN & Obj2)// 作比较, 然后�
       {    
        button1.unlock();
      }
-     else{  
+      else if (WL.CheckB()=-1&&YellowLight(&CSN)=0){  
       WL.WNLighting();
     std::this_thread::sleep_for(std::chrono::milliseconds(500));// make thread sleep for 500 ms(can both add in void /main after thread.。
     car1.unlock();//对应的  car1.lock() 在构造函数中；
