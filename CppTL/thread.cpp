@@ -179,7 +179,7 @@ class SensorWN: punlic SensorES
    do{
    t2=t2+0.01;
    ds delay(10);  //sleep(0.01)=10ms
-  }while(digitalRead(5==1 && t1>0);// has input signals
+  }while(digitalRead((5)==1 && t1>0);// has input signals
     }
   virtual int outputT()
     {  
