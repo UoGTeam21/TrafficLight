@@ -71,7 +71,7 @@ digitalWrite(2, LOW); // initialize East-West side yellow light
  //redSNini();
 for(tyEW=3;tyEW>0;tyEW--)
  {
- digitalWrite(2, 1);//digitalWrite(4, 1); //digitalWrite(5, 1); //EW yellow, else red
+ digitalWrite(2, 1);//digitalWrite(4, 1); //digitalWrite(5, 1); //East-West side yellow light, else red
    }
   public: 
   static int tg;
@@ -128,7 +128,7 @@ virtual void CounterY() // turn on the yellow light黄灯亮
 //redEWini();
  for(tySN=3;tySN>0;tySN--)
    {
-   digitalWrite(3, 1);//digitalWrite(1, 1);//digitalWrite(5, 1); //SN yellow, else red
+   digitalWrite(3, 1);//digitalWrite(1, 1);//digitalWrite(5, 1); //South-North side yellow light, else red
  }
   private:
      int tgSN;
@@ -199,7 +199,7 @@ class Button{
   {
     if(digitalRead(0) == 0)// detect low level signal
      {
-        delay(20); // 延时销抖, for machine button 
+        delay(20); // 延时销抖Delay debounce, for machine button 
         if(digitalRead(0) == 0)// 检测到低电平detect low level signal
         { flag= 1;}
    else 
@@ -226,7 +226,7 @@ class Button{
   {
   digitalWrite(1, 1);
   digitalWrite(4, 1);
-  digitalWrite(22, 1); //side green, else red
+  digitalWrite(22, 1); //sidewalk green light, else red
     }
      }
      void WNLighting(){
