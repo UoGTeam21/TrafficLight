@@ -19,7 +19,7 @@ using namespace std;
 #define sensorSN 5 //Pin 18
 #define button 0//Pin 11
 
-class CarLightEW // 车行道红绿灯
+class CarLightEW // East-West side main traffic light 
 {
    public:
        static int tg;
