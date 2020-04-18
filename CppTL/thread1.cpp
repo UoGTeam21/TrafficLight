@@ -26,15 +26,15 @@ using namespace std;
 #define sensorSN 5 //Pin 18
 #define button 0//Pin 11
 
-class CarLightEW // 车行道红绿灯
+class CarLightEW // East-West side mian traffic light
 {
    public:
        static int tg;
     int tgEW;
     int tyEW;
-    //friend void Gettg(CarLightEW*, SensorES&, SensorWN&);// 他的子函数不再需要有友元，因为tg为静态， 改变这个属性， 所有一起变。
+    //friend void Gettg(CarLightEW*, SensorES&, SensorWN&);// The subfunction do not need friend, tg is static
   public:
-    CarLightEW(int tgEW = 0, int tyEW = 3)
+    CarLightEW(int tgEW = 0, int tyEW = 3) //main traffic light follow the cycle of red-green-yellow
     {
         /*redEWini();
         greenEWini();
@@ -43,33 +43,33 @@ class CarLightEW // 车行道红绿灯
         this->tyEW = tyEW;
     }
 
-    /* void redEWini()
+    /* void redEWini() 
      {
          PinMode(1, OUTPUT);
-         digitalWrite(1, LOW);
+         digitalWrite(1, LOW); // initialize East-West side red light 
      }
-     void greenEWini()
+     void greenEWini()  
      {
          PinMode(6, OUTPUT);
-         digitalWrite(6, LOW);
+         digitalWrite(6, LOW); // initialize East-West side green light
      }
 
-     void yellowEWini()
+     void yellowEWini()   
      {
          PinMode(2, OUTPUT);
-         digitalWrite(2, LOW);
+         digitalWrite(2, LOW); // initialize East-West side yellow light
      }*/
 
-    virtual int CounterGR()// EW绿灯亮 
+    virtual int CounterGR()// turn on East-West side green light  EW绿灯亮 
     {
         //greenEWini();
        // redSNini();
-        //SNsensorini();变量调用构造函数初始化
-        for (tgEW = tg; tgEW > 0; tgEW--)//EW green, and SN sensortimer star 
+        //SNsensorini();变量调用构造函数初始化 initialize variable construction function
+        for (tgEW = tg; tgEW > 0; tgEW--)//East-West side turn to green light, and South-North side sensortimer start to work 
         {
             /*digitalWrite(6, 1);
             digitalWrite(4, 1);
-            digitalWrite(5, 1); //EW green, else red*/
+            digitalWrite(5, 1); //East-West side green light, else sides red light
             tg--;
             return tg;
             //if(CarLightEW::tg<=5 && tg>0)// counterv t can not exceed 1 minutes?
@@ -79,13 +79,13 @@ class CarLightEW // 车行道红绿灯
     }
     virtual void CounterY()
     {
-        // yellowEWini();
+        // yellowEWini();   //turn on the yellow light
          //redSNini();
         for (tyEW = 3; tyEW > 0; tyEW--)
         {
             ;  //digitalWrite(2, 1);
              //digitalWrite(4, 1);
-            //digitalWrite(5, 1); //EW yellow, else red
+            //digitalWrite(5, 1); //East-West side yellow light, else red
            
         }
 
@@ -103,44 +103,44 @@ class CarLightEW // 车行道红绿灯
             {
                 //redSNini();
                // greenSNini();
-                //yellowSNini();
+                //yellowSNini();       //enter the South-North side main traffic light cycle,same as before
                 this->tgSN = tgSN;
                 this->tySN = tySN;
             }
-            /* void redSNini()
+            /* void redSNini()   // initialize South-North side red light
              {
                  PinMode(4, OUTPUT);
                  digitalWrite(4, LOW);
              }
-             void greenSNini()
+             void greenSNini()  // initialize South-North side green light
              {
                  PinMode(26, OUTPUT);
                  digitalWrite(26, LOW);
              }
-             void yellowSNini()
+             void yellowSNini()  // initialize South-North side yellow light
              {
                  PinMode(3, OUTPUT);
                  digitalWrite(3, LOW);
              }*/
 
-            virtual int CounterGR()// SN绿灯亮
+            virtual int CounterGR()// turn on South-North side green light SN绿灯亮
             {
                 // redEWini();
                  //greenSNini();
-                 //EWsesorini(); // SN green, and EW sensortimer star 
+                 //EWsesorini(); // South-North side green light, and East-West side sensortimer start to work 
                 for (tgEW = CarLightEW::tg; tgSN > 0; tgSN--)
                 {
                     /*digitalWrite(1, 1);
                     digitalWrite(26, 1);
-                    digitalWrite(27, 1); //SN green, else red;*/
+                    digitalWrite(27, 1); //South-North side green light, else red;*/
                     CarLightEW::tg--;
                     return CarLightEW::tg;
                     //if(CarLightEW::tg<=5 && tg>0)// counterv t can not exceed 1 minutes?
-                        //{ obj.InputT();}// 五秒倒计时开始传
+                        //{ obj.InputT();}// 五秒倒计时开始传 5 seconds countdown
                 }
             }
 
-            virtual void CounterY() //黄灯亮
+            virtual void CounterY()  // turn on the yellow light黄灯亮
             {
                 //yelloeSNini();
                 //redEWini();
@@ -148,7 +148,7 @@ class CarLightEW // 车行道红绿灯
                 {
                     //digitalWrite(1, 1);
                     ; //digitalWrite(3, 1);
-                    //digitalWrite(5, 1); //SN yellow, else red
+                    //digitalWrite(5, 1);  // South-North side yellow light, else red
                    
                 }
 
@@ -161,12 +161,12 @@ class CarLightEW // 车行道红绿灯
             SensorES()
             {
                 t0 = 0;
-                t = 0;//初始化
+                t = 0;//initialization
                 //PinMode(23, OUTPUT);
             }// pinmode (int pin, int mode), computer control it by 23
             void Input()
             {
-                t0 = CarLightEW::tg;// ？！ 此处应该有锁！
+                t0 = CarLightEW::tg;// ？！ 此处应该有锁！ set a lock
             }
             void GetT()
             {
@@ -197,7 +197,7 @@ class CarLightEW // 车行道红绿灯
             SensorWN()
             {
                 t1 = 0;
-                t2 = 0;//初始化
+                t2 = 0;//初始化initialization
                // PinMode(23, OUTPUT);
             }// pinmode (int pin, int mode), computer control it by 23
             void GetT()
@@ -222,17 +222,17 @@ class CarLightEW // 车行道红绿灯
                 int flag;
                 public:
             Button() 
-            {//构造函数
+            {//构造函数constructor
                 flag = 0;
-                //pinMode(0, INPUT); //引脚0为BUTTON输入模式
-               // pullUpDnControl(0, PUD_UP); //设置0号引脚上拉,(设置成上拉输入，引脚上就加了一个上拉电阻，那么引脚就默认是高电平，当再去读取这个引脚的时候，
+                //pinMode(0, INPUT); //引脚0为BUTTON输入模式 set pin 0 to input mode
+               // pullUpDnControl(0, PUD_UP); //set pin 0 to pull up, so pin 0 defaults to high level设置0号引脚上拉,(设置成上拉输入，引脚上就加了一个上拉电阻，那么引脚就默认是高电平，当再去读取这个引脚的时候，
             }
             int CheckB()
             {
-                // if (digitalRead(0) == 0)// 检测到低电平
+                // if (digitalRead(0) == 0)// 检测到低电平 detect low level signal
                 {
-                    //delay(20); // 延时销抖, for machine button 
-                    //if (digitalRead(0) == 0)// 检测到低电平
+                    //delay(20); // 延时销抖delay debounce, for machine button 
+                    //if (digitalRead(0) == 0)// 检测到低电平detect low level signal
                     {
                         flag = 1;
                     }
@@ -252,7 +252,7 @@ class CarLightEW // 车行道红绿灯
             private:
                 Button b;
                 int tgside;
-                int tw;
+                int tw;                        // define sidewalk traffic light
             public:
                 WalkLight(int tgside = 10, int tw = 0) :b()
                 {
@@ -272,7 +272,7 @@ class CarLightEW // 车行道红绿灯
                         {
                             /*digitalWrite(1, 1);
                             digitalWrite(4, 1);
-                            digitalWrite(22, 1); //side green, else red*/
+                            digitalWrite(22, 1); //sidewalk green light, else red*/
                         }
                     }
                 }
@@ -301,25 +301,25 @@ class CarLightEW // 车行道红绿灯
                 SensorES SE, SS;
                 SensorWN SW, SN;
                 WalkLight WLSN, WLEW;
-                std::mutex m1, m2, m3, m4, sensor, sensor1, car, car1, button2, button1;
+                std::mutex m1, m2, m3, m4, sensor, sensor1, car, car1, button2, button1;  
             public:
                 LogicalMutex()
                 {
-                    car.lock(); car1.lock(); button2.lock(); button1.lock();
+                    car.lock(); car1.lock(); button2.lock(); button1.lock();     //Initialize all classes in the defined order
                 }
                 //初始化所有类按照定义顺序
             public:
-                int  YellowLight(CarLightEW* YL)//virtual黄灯运行，多态
+                int  YellowLight(CarLightEW* YL)//virtual yellow light work, polymorphism黄灯运行，多态
                 {
                     YL->CounterY();
                 }
 
-                int GRLight(CarLightEW* GRL)//virtual红绿灯灯运行，多态
+                int GRLight(CarLightEW* GRL)//virtual green & red light work, polymorphism红绿灯灯运行，多态
                 {
                     GRL->CounterGR();
                 }
 
-                int Newtg(SensorES& Ts)// sensor 输出的时间进行计算virtual， 多态
+                int Newtg(SensorES& Ts)//calculate output sensor time, polymorphism  输出的时间进行计算virtual， 多态
                 {
                     if (Ts.outputT() < 1)
                     {
@@ -333,11 +333,11 @@ class CarLightEW // 车行道红绿灯
                     {
                         return 20;//Tc.Gettg()+=10;
                     }
-                }// 以上为四个sensor线程需要的全部过程：输出时间并计算
+                }// 以上为四个sensor线程需要的全部过程：输出时间并计算output time and calculate for 4 sensor threds
 
-                void Gettg(CarLightEW* pt, SensorES& Obj1, SensorWN& Obj2)// 作比较, 然后给重新给静态函数tg赋值 输入对象（同一个类的不同对象）
+                void Gettg(CarLightEW* pt, SensorES& Obj1, SensorWN& Obj2)// make comparison, then assign value to tg 作比较, 然后给重新给静态函数tg赋值 输入对象（同一个类的不同对象）
                 {
-                    pt->tg = 0;//局部变量
+                    pt->tg = 0;//局部变量 Local variables
                   //SensorES tes; SensorWN twn;
                     if (Newtg(Obj1) >= Newtg(Obj2))
                     {
@@ -358,7 +358,7 @@ class CarLightEW // 车行道红绿灯
                         SW.outputT();
                         sensor.unlock();
                         Newtg(SW);
-                        m1.unlock(); //在调用这个类的构造函数时，锁定（锁的成对出现理论）。
+                        m1.unlock(); //When calling the constructor of this class, lock it在调用这个类的构造函数时，锁定（锁的成对出现理论）。
                     }
                 }
 
@@ -366,9 +366,9 @@ class CarLightEW // 车行道红绿灯
                 {
                     for (;;) {
                         m2.lock();
-                        SE.GetT();// 不用再加锁，tg 来控制。
+                        SE.GetT();// 不用再加锁，tg 来控制。use tg to control
                         while(SE.t0> 0);
-                        sensor.lock();//共享一个23号口输出；
+                        sensor.lock();//共享一个23号口输出；share the output of pin 23
                         SE.outputT();
                         sensor.unlock();
                         Newtg(SE);
@@ -469,7 +469,7 @@ class CarLightEW // 车行道红绿灯
                     }
                 }
 
-                void WLABSN() //SN方向
+                void WLABSN() //South-North side
                 {
                     for (;;) {
                         WLSN.CheckB();
