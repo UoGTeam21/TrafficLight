@@ -34,9 +34,9 @@ public:
 public:
     CarLightEW(int tgEW = 0, int tyEW = 3)
     {
-        /*redEWini();
+        redEWini();
         greenEWini();
-        yellowEWini();*/
+        yellowEWini();
         this->tgEW = tgEW;
         this->tyEW = tyEW;
     }
@@ -65,9 +65,9 @@ public:
         SNsensorini();变量调用构造函数初始化
         for (tgEW = tg; tgEW > 0; tgEW--)//EW green, and SN sensortimer star 
         {
-            /*digitalWrite(6, 1);
+            digitalWrite(6, 1);
             digitalWrite(4, 1);
-            digitalWrite(5, 1); //EW green, else red*/
+            digitalWrite(5, 1); //EW green, else red
             tg--;
             return tg;
             //if(CarLightEW::tg<=5 && tg>0)// counterv t can not exceed 1 minutes?
@@ -77,8 +77,8 @@ public:
     }
     virtual int CounterY()
     {
-        // yellowEWini();
-         //redSNini();
+         yellowEWini();
+         redSNini();
         for (tyEW = 3; tyEW > 0; tyEW--)
         {
             digitalWrite(2, 1);
@@ -130,7 +130,7 @@ public:
         {
             digitalWrite(1, 1);
             digitalWrite(26, 1);
-            digitalWrite(27, 1); //SN green, else red;*/
+            digitalWrite(27, 1); //SN green, else red;
             CarLightEW::tg--;
             return CarLightEW::tg;
             //if(CarLightEW::tg<=5 && tg>0)// counterv t can not exceed 1 minutes?
@@ -208,7 +208,7 @@ public:
     }
     virtual int outputT()
     {
-        //digitalWrite(23, 1);    //operate timer; digitalwrite(int pin, int value)// if value != 0 == high)
+        digitalWrite(23, 1);    //operate timer; digitalwrite(int pin, int value)// if value != 0 == high)
         return t2;
        t2 = 0;
     }
@@ -228,14 +228,14 @@ public:
     }
     int CheckB()
     {
-        // if (digitalRead(0) == 0)// 检测到低电平
+        if (digitalRead(0) == 0)// 检测到低电平
         {
             delay(20); // 延时销抖, for machine button 
             if (digitalRead(0) == 0)// 检测到低电平
             {
                 flag = 1;
             }
-            //else
+            else
             {
                 flag = -1;
             }
