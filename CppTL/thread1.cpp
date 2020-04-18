@@ -1,5 +1,4 @@
-//#include<WiringPi.h>
-WiringPi.h>
+#include<WiringPi.h>
 #include<stdio.h>
 #include<iostream>
 #include<thread>
@@ -43,7 +42,7 @@ class CarLightEW // East-West side mian traffic light
         this->tyEW = tyEW;
     }
 
-    /* void redEWini() 
+     void redEWini() 
      {
          PinMode(1, OUTPUT);
          digitalWrite(1, LOW); // initialize East-West side red light 
@@ -58,16 +57,16 @@ class CarLightEW // East-West side mian traffic light
      {
          PinMode(2, OUTPUT);
          digitalWrite(2, LOW); // initialize East-West side yellow light
-     }*/
+     }
 
     virtual int CounterGR()// turn on East-West side green light  EW绿灯亮 
     {
-        //greenEWini();
-       // redSNini();
-        //SNsensorini();变量调用构造函数初始化 initialize variable construction function
-        for (tgEW = tg; tgEW > 0; tgEW--)//East-West side turn to green light, and South-North side sensortimer start to work 
+        greenEWini();
+        redSNini();  //SNsensorini();变量调用构造函数初始化 initialize variable construction function
+        for (tgEW = tg; tgEW > 0; tgEW--)//East-West side turn to green light, and South-North side se
+      nsortimer start to work 
         {
-            /*digitalWrite(6, 1);
+            digitalWrite(6, 1);
             digitalWrite(4, 1);
             digitalWrite(5, 1); //East-West side green light, else sides red light
             tg--;
@@ -79,13 +78,13 @@ class CarLightEW // East-West side mian traffic light
     }
     virtual void CounterY()
     {
-        // yellowEWini();   //turn on the yellow light
-         //redSNini();
+        yellowEWini();   //turn on the yellow light
+         redSNini();
         for (tyEW = 3; tyEW > 0; tyEW--)
         {
-            ;  //digitalWrite(2, 1);
-             //digitalWrite(4, 1);
-            //digitalWrite(5, 1); //East-West side yellow light, else red
+            digitalWrite(2, 1);
+            digitalWrite(4, 1);
+            digitalWrite(5, 1); //East-West side yellow light, else red
            
         }
 
@@ -101,13 +100,13 @@ class CarLightEW // East-West side mian traffic light
             int tySN;
             CarLightSN(int tgEW = 0, int tyEW = 3, int tySN = 3, int tgSN = 0) : CarLightEW(tgEW, tyEW)
             {
-                //redSNini();
-               // greenSNini();
-                //yellowSNini();       //enter the South-North side main traffic light cycle,same as before
+                redSNini();
+                greenSNini();
+                yellowSNini();       //enter the South-North side main traffic light cycle,same as before
                 this->tgSN = tgSN;
                 this->tySN = tySN;
             }
-            /* void redSNini()   // initialize South-North side red light
+             void redSNini()   // initialize South-North side red light
              {
                  PinMode(4, OUTPUT);
                  digitalWrite(4, LOW);
@@ -121,16 +120,16 @@ class CarLightEW // East-West side mian traffic light
              {
                  PinMode(3, OUTPUT);
                  digitalWrite(3, LOW);
-             }*/
+             }
 
             virtual int CounterGR()// turn on South-North side green light SN绿灯亮
             {
-                // redEWini();
-                 //greenSNini();
-                 //EWsesorini(); // South-North side green light, and East-West side sensortimer start to work 
-                for (tgEW = CarLightEW::tg; tgSN > 0; tgSN--)
+                 redEWini();
+                 //greenSNini(); //EWsesorini(); // South-North side green light, and East-West side sensortimer start to work
+                 
+                for (tgSN = CarLightEW::tg; tgSN > 0; tgSN--)
                 {
-                    /*digitalWrite(1, 1);
+                    digitalWrite(1, 1);
                     digitalWrite(26, 1);
                     digitalWrite(27, 1); //South-North side green light, else red;*/
                     CarLightEW::tg--;
@@ -142,13 +141,13 @@ class CarLightEW // East-West side mian traffic light
 
             virtual void CounterY()  // turn on the yellow light黄灯亮
             {
-                //yelloeSNini();
+                yelloeSNini();
                 //redEWini();
                 for (tySN = 3; tySN > 0; tySN--)
                 {
-                    //digitalWrite(1, 1);
-                    ; //digitalWrite(3, 1);
-                    //digitalWrite(5, 1);  // South-North side yellow light, else red
+                    digitalWrite(1, 1);
+                    digitalWrite(3, 1);
+                    digitalWrite(5, 1);  // South-North side yellow light, else red
                    
                 }
 
@@ -162,7 +161,7 @@ class CarLightEW // East-West side mian traffic light
             {
                 t0 = 0;
                 t = 0;//initialization
-                //PinMode(23, OUTPUT);
+                PinMode(23, OUTPUT);
             }// pinmode (int pin, int mode), computer control it by 23
             void Input()
             {
@@ -174,11 +173,11 @@ class CarLightEW // East-West side mian traffic light
                 {
                     t = t + 0.01;
                     std::this_thread::sleep_for(std::chrono::milliseconds(10));  //sleep(0.01)=10ms
-                } while (/*digitalRead((27) == 1 &&*/ t0 > 0);// has input signals been blocked
+                } while (digitalRead((27) == 1 && t0 > 0);// has input signals been blocked
             }
             virtual int outputT()
             {
-                //digitalWrite(23, 1);    //operate timer; digitalwrite(int pin, int value)// if value != 0 == high)
+                digitalWrite(23, 1);    //operate timer; digitalwrite(int pin, int value)// if value != 0 == high)
                 return t;
             }
           private:
@@ -198,7 +197,7 @@ class CarLightEW // East-West side mian traffic light
             {
                 t1 = 0;
                 t2 = 0;//初始化initialization
-               // PinMode(23, OUTPUT);
+                PinMode(23, OUTPUT);
             }// pinmode (int pin, int mode), computer control it by 23
             void GetT()
             {
@@ -206,11 +205,11 @@ class CarLightEW // East-West side mian traffic light
                 do {
                     t2 = t2 + 0.01;
                     std::this_thread::sleep_for(std::chrono::milliseconds(10));//delay(10);  //sleep(0.01)=10ms
-                } while (/*digitalRead((5) == 1 && */t1 > 0);// has input signals
+                } while (digitalRead((5) == 1 && t1 > 0);// has input signals
             }
             virtual int outputT()
             {
-                //digitalWrite(23, 1);    //operate timer; digitalwrite(int pin, int value)// if value != 0 == high)
+                digitalWrite(23, 1);    //operate timer; digitalwrite(int pin, int value)// if value != 0 == high)
                 return t2;
             }
         };
@@ -224,15 +223,15 @@ class CarLightEW // East-West side mian traffic light
             Button() 
             {//构造函数constructor
                 flag = 0;
-                //pinMode(0, INPUT); //引脚0为BUTTON输入模式 set pin 0 to input mode
-               // pullUpDnControl(0, PUD_UP); //set pin 0 to pull up, so pin 0 defaults to high level设置0号引脚上拉,(设置成上拉输入，引脚上就加了一个上拉电阻，那么引脚就默认是高电平，当再去读取这个引脚的时候，
+                pinMode(0, INPUT); //引脚0为BUTTON输入模式 set pin 0 to input mode
+                pullUpDnControl(0, PUD_UP); //set pin 0 to pull up, so pin 0 defaults to high level设置0号引脚上拉,(设置成上拉输入，引脚上就加了一个上拉电阻，那么引脚就默认是高电平，当再去读取这个引脚的时候，
             }
             int CheckB()
             {
-                // if (digitalRead(0) == 0)// 检测到低电平 detect low level signal
+                /if (digitalRead(0) == 0)// 检测到低电平 detect low level signal
                 {
-                    //delay(20); // 延时销抖delay debounce, for machine button 
-                    //if (digitalRead(0) == 0)// 检测到低电平detect low level signal
+                    delay(20); // 延时销抖delay debounce, for machine button 
+                    if (digitalRead(0) == 0)// 检测到低电平detect low level signal
                     {
                         flag = 1;
                     }
@@ -270,9 +269,9 @@ class CarLightEW // East-West side mian traffic light
                     if (tw = 1) {
                         for (tgside = 10; tgside > 0; tgside--)
                         {
-                            /*digitalWrite(1, 1);
+                            digitalWrite(1, 1);
                             digitalWrite(4, 1);
-                            digitalWrite(22, 1); //sidewalk green light, else red*/
+                            digitalWrite(22, 1); //sidewalk green light, else red
                         }
                     }
                 }
@@ -280,9 +279,9 @@ class CarLightEW // East-West side mian traffic light
                     tw = CheckB();
                     if (tw = 0)
                     {
-                        /*digitalWrite(1, LOW);// no signal was checked, no light respon
+                        digitalWrite(1, LOW);// no signal was checked, no light respon
                         digitalWrite(4, LOW);
-                        digitalWrite(22, LOW);*/
+                        digitalWrite(22, LOW);
                     }
                 }
 
