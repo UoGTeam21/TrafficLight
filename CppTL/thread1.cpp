@@ -163,12 +163,9 @@ class CarLightEW // East-West side mian traffic light
                 t = 0;//initialization
                 PinMode(23, OUTPUT);
             }// pinmode (int pin, int mode), computer control it by 23
-            void Input()
-            {
-                t0 = CarLightEW::tg;// ？！ 此处应该有锁！ set a lock
-            }
             void GetT()
             {
+                t0 = CarLightEW::tg;
                 do 
                 {
                     t = t + 0.01;
@@ -266,7 +263,7 @@ class CarLightEW // East-West side mian traffic light
                 void WLighting()
                 {
                     tw = CheckB();//digitalWrite(18, GPIO.HIGH); // all side greenlight lighting
-                    if (tw = 1) {
+                    if (tw == 1) {
                         for (tgside = 10; tgside > 0; tgside--)
                         {
                             digitalWrite(1, 1);
@@ -277,7 +274,7 @@ class CarLightEW // East-West side mian traffic light
                 }
                 void WNLighting() {
                     tw = CheckB();
-                    if (tw = 0)
+                    if (tw == 0)
                     {
                         digitalWrite(1, LOW);// no signal was checked, no light respon
                         digitalWrite(4, LOW);
@@ -410,7 +407,7 @@ class CarLightEW // East-West side mian traffic light
                     for (;;) {
                         GRLight(&CEW);
                         YellowLight(&CEW);
-                        if (GRLight(&CEW) > 5)
+                        if (GRLight(&CEW) == 5)
                         {
                             m3.unlock();
                             m4.unlock();
@@ -431,7 +428,7 @@ class CarLightEW // East-West side mian traffic light
                         //m3.unlock();
                        //m4.unlock();
                         GRLight(&CSN);
-                        if (GRLight(&CSN) > 5)
+                        if (GRLight(&CSN) == 5)
                         {
                             m1.unlock();
                             m2.unlock();
