@@ -29,7 +29,7 @@ using namespace std;
 
 #define OUTPUT "out"
 #define INPUT  "in"
-#define LOW		0
+#define LOW     0
 #define PUD_UP	1
 
 #define LWQDBG 1
@@ -71,13 +71,12 @@ void pullUpDnControl(int pinNum, int level)
 }
 #endif
 
-class CarLightEW // 杞﹁閬撶孩缁跨伅
+class CarLightEW 
 {
 public:
     static int tg;
     int tgEW;
     int tyEW;
-    //friend void Gettg(CarLightEW*, SensorES&, SensorWN&);// 浠栫殑瀛愬嚱鏁颁笉鍐嶉渶瑕佹湁鍙嬪厓锛屽洜涓簍g涓洪潤鎬侊紝 鏀瑰彉杩欎釜灞炴€э紝 鎵€鏈変竴璧峰彉銆?
 public:
     CarLightEW(int tgEW = 0, int tyEW = 3)
     {
@@ -106,20 +105,19 @@ public:
          digitalWrite(2, LOW);
      }
 
-    virtual int CounterGR()// EW缁跨伅浜?
+    virtual int CounterGR()
     {
         greenEWini();
         redEWini();
-        //SNsensorini();//鍙橀噺璋冪敤鏋勯€犲嚱鏁板垵濮嬪寲
         for (tgEW = tg; tgEW > 0; tgEW--)//EW green, and SN sensortimer star 
         {
             digitalWrite(6, 1);
             digitalWrite(4, 1);
             digitalWrite(5, 1); //EW green, else red
             tg--;
+		{
             return tg;
-            //if(CarLightEW::tg<=5 && tg>0)// counterv t can not exceed 1 minutes?
-              //{ obj.InputT();}// 浜旂鍊掕鏃跺紑濮嬩紶+ //sensortimer();
+		}
         }
 
     }
@@ -161,35 +159,34 @@ public:
      }
      void greenSNini()
      {
-		 cout << "greenSNini" << endl;
+     cout << "greenSNini" << endl;
          PinMode(26, OUTPUT);
          digitalWrite(26, LOW);
      }
      void yellowSNini()
      {
-		 cout << "yellowSNini" << endl;
+      cout << "yellowSNini" << endl;
          PinMode(3, OUTPUT);
          digitalWrite(3, LOW);
      }
 
-    virtual int CounterGR()// SN缁跨伅浜?
+    virtual int CounterGR()
     {
-        // redEWini();
-         //greenSNini();
-         //EWsesorini(); // SN green, and EW sensortimer star 
+         redEWini();
+         greenSNini();
         for (tgSN = CarLightEW::tg; tgSN > 0; tgSN--)
         {
             digitalWrite(1, 1);
             digitalWrite(26, 1);
             digitalWrite(27, 1); //SN green, else red;
             CarLightEW::tg--;
+	    {
             return CarLightEW::tg;
-            //if(CarLightEW::tg<=5 && tg>0)// counterv t can not exceed 1 minutes?
-                //{ obj.InputT();}// 浜旂鍊掕鏃跺紑濮嬩紶
+            }
         }
     }
 
-    virtual int CounterY() //榛勭伅浜?
+    virtual int CounterY() 
     {
         yellowSNini();
         redEWini();
@@ -198,9 +195,8 @@ public:
             digitalWrite(1, 1);
             digitalWrite(3, 1);
             digitalWrite(5, 1); //SN yellow, else red
-             //return tySN; //return 涔嬪悗鍑芥暟缁撴潫
         }
-      return 0;
+        return 0;
     }
 };
 
@@ -210,7 +206,7 @@ public:
     SensorES()
     {
         t0 = 0;
-        t = 0;//鍒濆鍖?
+        t = 0;
         PinMode(23, OUTPUT);
     }// pinmode (int pin, int mode), computer control it by 23
 
@@ -221,7 +217,7 @@ public:
         {
             t = t + 0.01;
             std::this_thread::sleep_for(std::chrono::milliseconds(10));  //sleep(0.01)=10ms
-        } while (/*digitalRead((27) == 1 &&*/ t0 > 0);// has input signals been blocked
+        } while (digitalRead((27) == 1 && t0 > 0);// has input signals been blocked
     }
     virtual int outputT()
     {
@@ -245,7 +241,7 @@ public:
     SensorWN()
     {
         t1 = 0;
-        t2 = 0;//鍒濆鍖?
+        t2 = 0;
        PinMode(23, OUTPUT);
     }// pinmode (int pin, int mode), computer control it by 23
 
@@ -255,7 +251,7 @@ public:
         do {
             t2 = t2 + 0.01;
             std::this_thread::sleep_for(std::chrono::milliseconds(10));//delay(10);  //sleep(0.01)=10ms
-        } while (/*digitalRead((5) == 1 && */t1 > 0);// has input signals
+        } while (digitalRead((5) == 1 && t1 > 0);// has input signals
     }
     virtual int outputT()
     {
@@ -272,29 +268,26 @@ public:
     int flag;
 public:
     Button()
-    {//鏋勯€犲嚱鏁?
+    {
         flag = 0;
-        PinMode(0, INPUT); //寮曡剼0涓築UTTON杈撳叆妯″紡
-       pullUpDnControl(0, PUD_UP); //璁剧疆0鍙峰紩鑴氫笂鎷?(璁剧疆鎴愪笂鎷夎緭鍏ワ紝寮曡剼涓婂氨鍔犱簡涓€涓笂鎷夌數闃伙紝閭ｄ箞寮曡剼灏遍粯璁ゆ槸楂樼數骞筹紝褰撳啀鍘昏鍙栬繖涓紩鑴氱殑鏃跺€欙紝
+        PinMode(0, INPUT); 
+       pullUpDnControl(0, PUD_UP);
     }
     int CheckB()
     {
-        //if (digitalRead(0) == 0)// 妫€娴嬪埌浣庣數骞?
-        //{
-        //    delay(20); // 寤舵椂閿€鎶? for machine button 
-        //    if (digitalRead(0) == 0)// 妫€娴嬪埌浣庣數骞?
-        //    {
-        //        flag = 1;
-        //    }
-        //    else
-        //    {
-        //        flag = -1;
-        //    }
-        //    return flag;
-        //}
-		return 0;
+        if (digitalRead(0) == 0)
+        {
+            delay(20); 
+            if (digitalRead(0) == 0)
+           {
+               flag = 1;
+           }
+           else
+           {
+                flag = -1;
+            }
+           return flag;
     }
-
 };
 
 class WalkLight
@@ -357,24 +350,21 @@ public:
     LogicalMutex()
     {
         m1.lock(); m2.lock(); m3.lock();  m4.lock(); 
-       //car.lock(); car1.lock(); 
        button2.lock(); button1.lock();
     }
-    //鍒濆鍖栨墍鏈夌被鎸夌収瀹氫箟椤哄簭
+    
 public:
-    int  YellowLight(CarLightEW* YL)//virtual榛勭伅杩愯锛屽鎬?
+    int  YellowLight(CarLightEW* YL)
     {
         return YL->CounterY();
-        //0;	//TODO lwq
     }
 
-    int GRLight(CarLightEW* GRL)//virtual绾㈢豢鐏伅杩愯锛屽鎬?
+    int GRLight(CarLightEW* GRL)
     {
          return GRL->CounterGR();
-       // 0;	//TODO lwq
     }
 
-    int Newtg(SensorES& Ts)// sensor 杈撳嚭鐨勬椂闂磋繘琛岃绠梫irtual锛?澶氭€?
+    int Newtg(SensorES& Ts)
     {
         if (Ts.outputT() < 1)
         {
@@ -388,11 +378,10 @@ public:
         {
             return 20;//Tc.Gettg()+=10;
         }
-    }// 浠ヤ笂涓哄洓涓猻ensor绾跨▼闇€瑕佺殑鍏ㄩ儴杩囩▼锛氳緭鍑烘椂闂村苟璁＄畻
+    }
 
-    void Gettg(CarLightEW* pt, SensorES& Obj1, SensorWN& Obj2)// 浣滄瘮杈? 鐒跺悗缁欓噸鏂扮粰闈欐€佸嚱鏁皌g璧嬪€?杈撳叆瀵硅薄锛堝悓涓€涓被鐨勪笉鍚屽璞★級
-    {
-        pt->tg = 0;//灞€閮ㄥ彉閲?
+    void Gettg(CarLightEW* pt, SensorES& Obj1, SensorWN& Obj2)
+        pt->tg = 0;
       //SensorES tes; SensorWN twn;
         if (Newtg(Obj1) >= Newtg(Obj2))
         {
@@ -415,7 +404,7 @@ public:
                 SW.outputT();
                 sensor.unlock();
                 Newtg(SW);
-                m1.unlock(); //鍦ㄨ皟鐢ㄨ繖涓被鐨勬瀯閫犲嚱鏁版椂锛岄攣瀹氾紙閿佺殑鎴愬鍑虹幇鐞嗚锛夈€?
+                m1.unlock(); 
             }
         }
     }
@@ -426,9 +415,9 @@ public:
             if (GRLight(&CEW) == 5)
             {
                 m2.lock();
-                SE.GetT();// 涓嶇敤鍐嶅姞閿侊紝tg 鏉ユ帶鍒躲€?
+                SE.GetT();
                 while (SE.t0 > 0);
-                sensor.lock();//鍏变韩涓€涓?3鍙峰彛杈撳嚭锛?
+                sensor.lock();
                 SE.outputT();
                 sensor.unlock();
                 Newtg(SE);
@@ -460,7 +449,7 @@ public:
         {
             if (GRLight(&CSN) == 5)
             {
-            m4.lock();//涓€寮€濮嬪氨閿佷簡锛屾病鏈夎幏寰楄幏寰楅攣銆?
+            m4.lock();
             SN.GetT();
             while (SN.t1 > 0);
             sensor1.lock();
@@ -471,9 +460,7 @@ public:
             }
         }
     }
-    //LogicalMutex(){car.lock();car1.lock(); m1.lock(); m2.lock(); m3.lock();m4.lock();button.lock();button1.lock();} 
-   //鏋勯€犲嚱鏁颁腑鍙攣浜嗕竴娆★紝鍒╃敤绋嬪簭浣撳惊鐜攣锛堬紜鍚勫嚱鏁癴or(;;)鍋氬惊鐜級sensor鐨勯攣鏃犺鏄皝鍏堢敤23杩涜杈撳嚭鏃犳墍璋擄紝鎵€浠ヤ笉璁告斁鍦ㄦ瀯閫犲嚱鏁颁腑銆傘€?
-   //闄ゅ幓鏋勯€犲嚱鏁颁腑锛岀▼搴忊€滀綋鈥濅腑鐨勯攣鎴愬鍑虹幇銆?
+    //LogicalMutex(){ m1.lock(); m2.lock(); m3.lock();m4.lock();button.lock();button1.lock();}
     void CL()
     {
 #ifdef LWQDBG
@@ -481,32 +468,17 @@ public:
 #endif
         for (;;) 
         {
-              //car.lock();
-             //car1.lock();
+            
             GRLight(&CEW);//GRLight(&CEW)
             YellowLight(&CEW);
-            //if (GRLight(&CEW) == 5)锛屾斁鍒颁簡sensor涔嬩腑銆?
-            //{ 
-                //m3.unlock();
-               // m4.unlock();  
-         //  }
-
-            // if (WLEW.CheckB() == 1 && YellowLight(&CEW) == 0)
-            //{
-                 //car.lock();
-                //button2.unlock();
-               // WLABEW();
-            //}  
-                //car.lock();
+          
                 if (WLEW.CheckB() == -1 && YellowLight(&CEW) == 0) //
                 {
                     button1.lock();
                     WLEW.WNLighting();
                     std::this_thread::sleep_for(std::chrono::milliseconds(500));//delay(500);
                     button1.unlock();
-                   // car.unlock(); //瀵瑰簲鐨? car.lock() 鍦ㄦ瀯閫犲嚱鏁颁腑锛?
-                }//鍙湁涓€涓幏寰椾簡閿併€?
-                //car.lock();
+                }
                 m3.lock();
                 m4.lock();
                 Gettg(&CEW, SS, SN);
@@ -514,18 +486,9 @@ public:
                 m4.unlock();
                 while (B.flag == 1);
                 GRLight(&CSN);
-                //if (GRLight(&CSN) == 5)
-                //{
-                    // m1.unlock();
-                    // m2.unlock();
-
-                //}
+               
                 YellowLight(&CSN);//灏戜竴涓猚arlock锛屽拰button lock锛屾瀯閫犮€?
-               // if (WLSN.CheckB() == 1)
-               // {
-                    // WLABSN();
-                    //button1.unlock();
-                //}
+               
                 if (WLSN.CheckB() == -1&& YellowLight(&CSN) == 0)//else// car.lock();
                 {
 
@@ -533,8 +496,7 @@ public:
                     WLSN.WNLighting();
                     std::this_thread::sleep_for(std::chrono::milliseconds(500));// make thread sleep for 500 ms(can both add in void /main after thread.銆?
                     button2.unlock();//car1.unlock();//瀵瑰簲鐨? car1.lock() 鍦ㄦ瀯閫犲嚱鏁颁腑锛?
-                }//鍙湁涓€涓幏寰椾簡閿併€?
-                //car1.lock();
+                }
                 m1.lock();
                 m2.lock();
                 Gettg(&CSN, SE, SW);
@@ -544,7 +506,7 @@ public:
         }
     }
 
-    void WLABEW()//EW鏂瑰悜
+    void WLABEW()
     {
         for (;;) 
         {
@@ -554,13 +516,12 @@ public:
                 button2.lock();
                 WLEW.WLighting();
                 WLEW.Setflag();
-                //car.unlock(); //if and else 娉ㄦ剰 
                 button2.unlock();
             }
         }
     }
 
-    void WLABSN() //SN鏂瑰悜
+    void WLABSN() 
     {
         for (;;) {
              WLSN.CheckB();
@@ -569,8 +530,7 @@ public:
                 button1.lock();
                 WLSN.WLighting();
                 WLSN.Setflag();
-                button1.unlock();
-                //car1.unlock();  //if and else 娉ㄦ剰
+                button1.unlock();               
             }
         }
     }
@@ -579,17 +539,12 @@ public:
 
 int main()
 {
-    /*if (WiringPiSetup() == -1) //initialize wiringpi store fail or not
-    {
-        printf("you set up wiringpi failed"); //failed
-        return 1;
-    }*/
     LogicalMutex LM;
     std::thread t7(&LogicalMutex::CL, std::ref(LM));  
     std::thread t1(&LogicalMutex::SensorW, std::ref(LM));
     std::thread t2(&LogicalMutex::SensorE, std::ref(LM));
     std::thread t3(&LogicalMutex::SensorS, std::ref(LM));
-    std::thread t4(&LogicalMutex::SensorN, std::ref(LM));//绗簩涓弬鏁帮紝淇濊瘉绾跨▼閲岀敤鐨勫悓涓€涓璞?
+    std::thread t4(&LogicalMutex::SensorN, std::ref(LM));
     std::thread t5(&LogicalMutex::WLABSN, std::ref(LM));
     std::thread t6(&LogicalMutex::WLABEW, std::ref(LM));
     
