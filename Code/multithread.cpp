@@ -29,7 +29,8 @@ using namespace std;
 
 #define OUTPUT "out"
 #define INPUT  "in"
-#define LOW     0
+#define LOW	0
+#define HIGH    1
 #define PUD_UP	1
 
 #define LWQDBG 1
@@ -38,36 +39,44 @@ using namespace std;
 vector<string> pinNames(100);
 void initDbg()
 {
-	pinNames[redEW] = "redEW";
-	pinNames[redSN] = "redSN";
-	pinNames[greenEW] = "greenEW";
-	pinNames[greenSN] = "greenSN";
-	pinNames[yellowEW] = "yellowEW";
-	pinNames[yellowSN] = "yellowSN";
-	pinNames[sider] = "sider";
-	pinNames[sideg] = "sideg";
-	pinNames[sensorEW] = "sensorEW";
-	pinNames[sensorSN] = "sensorSN";
-	pinNames[button] = "button";
+    pinNames[redEW] = "redEW";
+    pinNames[redSN] = "redSN";
+    pinNames[greenEW] = "greenEW";
+    pinNames[greenSN] = "greenSN";
+    pinNames[yellowEW] = "yellowEW";
+    pinNames[yellowSN] = "yellowSN";
+    pinNames[sider] = "sider";
+    pinNames[sideg] = "sideg";
+    pinNames[sensorEW] = "sensorEW";
+    pinNames[sensorSN] = "sensorSN";
+    pinNames[button] = "button";
 }
 mutex mux;
-void PinMode(int pinNum,string mode)
+void PinMode(int pinNum, string mode)
 {
-	mux.lock();
-	cout << pinNames[pinNum] << " has been set " << mode << " mode" << endl;
-	mux.unlock();
+    mux.lock();
+    cout << pinNames[pinNum] << " has been set " << mode << " mode" << endl;
+    mux.unlock();
 }
+int digitalRead(int pinNum, int level)
+{
+    mux.lock();
+    cout << pinNames[pinNum] << string(level ? " high" : " low") << endl;
+    mux.unlock();
+     return level;
+}
+
 void digitalWrite(int pinNum, int level)
 {
-	mux.lock();
-	cout << pinNames[pinNum] << string(level ? " high" : " low") << endl;
-	mux.unlock();
+    mux.lock();
+    cout << pinNames[pinNum] << string(level ? " high" : " low") << endl;
+    mux.unlock();
 }
 void pullUpDnControl(int pinNum, int level)
 {
-	mux.lock();
-	cout << pinNames[pinNum] << string(level ? "high" : "low") << endl;
-	mux.unlock();
+    mux.lock();
+    cout << pinNames[pinNum] << string(level ? "high" : "low") << endl;
+    mux.unlock();
 }
 #endif
 
@@ -77,6 +86,7 @@ public:
     static int tg;
     int tgEW;
     int tyEW;
+    
 public:
     CarLightEW(int tgEW = 0, int tyEW = 3)
     {
@@ -88,43 +98,43 @@ public:
     }
 
     void redEWini()
-     {
-         PinMode(1, OUTPUT);
-         digitalWrite(1, LOW);
-     }
-     void greenEWini()
-     {
-		 cout << "greenEWini" << endl;
-         PinMode(6, OUTPUT);
-         digitalWrite(6, LOW);
-     }
+    {
+        PinMode(1, OUTPUT);
+        digitalWrite(1, LOW);
+    }
+    void greenEWini()
+    {
+        cout << "greenEWini" << endl;
+        PinMode(6, OUTPUT);
+        digitalWrite(6, LOW);
+    }
 
-     void yellowEWini()
-     {
-         PinMode(2, OUTPUT);
-         digitalWrite(2, LOW);
-     }
+    void yellowEWini()
+    {
+        PinMode(2, OUTPUT);
+        digitalWrite(2, LOW);
+    }
 
     virtual int CounterGR()
     {
         greenEWini();
         redEWini();
+       
         for (tgEW = tg; tgEW > 0; tgEW--)//EW green, and SN sensortimer star 
         {
             digitalWrite(6, 1);
             digitalWrite(4, 1);
             digitalWrite(5, 1); //EW green, else red
             tg--;
-		{
             return tg;
-		}
+            
         }
 
     }
     virtual int CounterY()
     {
-         yellowEWini();
-         redEWini();
+        yellowEWini();
+        redEWini();
         for (tyEW = 3; tyEW > 0; tyEW--)
         {
             digitalWrite(2, 1);
@@ -132,7 +142,7 @@ public:
             digitalWrite(5, 1); //EW yellow, else red
             //return tyEW;
         }
-         return 0;
+        return 0;
     }
 };
 int CarLightEW::tg = 10;//tg initialize.
@@ -151,38 +161,36 @@ public:
         this->tgSN = tgSN;
         this->tySN = tySN;
     }
-      void redSNini()
-     {
-		  cout << "redSNini" << endl;
-         PinMode(4, OUTPUT);
-         digitalWrite(4, LOW);
-     }
-     void greenSNini()
-     {
-     cout << "greenSNini" << endl;
-         PinMode(26, OUTPUT);
-         digitalWrite(26, LOW);
-     }
-     void yellowSNini()
-     {
-      cout << "yellowSNini" << endl;
-         PinMode(3, OUTPUT);
-         digitalWrite(3, LOW);
-     }
+    void redSNini()
+    {
+        cout << "redSNini" << endl;
+        PinMode(4, OUTPUT);
+        digitalWrite(4, LOW);
+    }
+    void greenSNini()
+    {
+        cout << "greenSNini" << endl;
+        PinMode(26, OUTPUT);
+        digitalWrite(26, LOW);
+    }
+    void yellowSNini()
+    {
+        cout << "yellowSNini" << endl;
+        PinMode(3, OUTPUT);
+        digitalWrite(3, LOW);
+    }
 
     virtual int CounterGR()
     {
-         redEWini();
-         greenSNini();
+        
         for (tgSN = CarLightEW::tg; tgSN > 0; tgSN--)
         {
             digitalWrite(1, 1);
             digitalWrite(26, 1);
             digitalWrite(27, 1); //SN green, else red;
             CarLightEW::tg--;
-	    {
             return CarLightEW::tg;
-            }
+          
         }
     }
 
@@ -195,6 +203,7 @@ public:
             digitalWrite(1, 1);
             digitalWrite(3, 1);
             digitalWrite(5, 1); //SN yellow, else red
+            
         }
         return 0;
     }
@@ -217,7 +226,7 @@ public:
         {
             t = t + 0.01;
             std::this_thread::sleep_for(std::chrono::milliseconds(10));  //sleep(0.01)=10ms
-        } while (digitalRead((27) == 1 && t0 > 0);// has input signals been blocked
+        } while (digitalRead(27, HIGH) && t0 > 0);
     }
     virtual int outputT()
     {
@@ -242,22 +251,23 @@ public:
     {
         t1 = 0;
         t2 = 0;
-       PinMode(23, OUTPUT);
+        PinMode(23, OUTPUT);
     }// pinmode (int pin, int mode), computer control it by 23
 
     void GetT()
     {
         t1 = CarLightEW::tg;
-        do {
+        do 
+        {
             t2 = t2 + 0.01;
             std::this_thread::sleep_for(std::chrono::milliseconds(10));//delay(10);  //sleep(0.01)=10ms
-        } while (digitalRead((5) == 1 && t1 > 0);// has input signals
+        } while (digitalRead(5, HIGH) && t1 > 0);
     }
     virtual int outputT()
     {
         digitalWrite(23, 1);    //operate timer; digitalwrite(int pin, int value)// if value != 0 == high)
         return t2;
-       t2 = 0;
+        t2 = 0;
     }
 };
 
@@ -271,32 +281,36 @@ public:
     {
         flag = 0;
         PinMode(0, INPUT); 
-       pullUpDnControl(0, PUD_UP);
+        pullUpDnControl(0, PUD_UP); 
     }
     int CheckB()
     {
-        if (digitalRead(0) == 0)
+        if (digitalRead(0, LOW))
         {
-            delay(20); 
-            if (digitalRead(0) == 0)
-           {
-               flag = 1;
-           }
+            std::this_thread::sleep_for(std::chrono::milliseconds(20));  //sleep(0.02)=20ms
+        }
+            if (digitalRead(0,LOW))
+             {
+              flag = 1;
+             }
            else
-           {
-                flag = -1;
-            }
+             {
+               flag = -1;
+           }
            return flag;
+       
+        //return 0;
     }
+
 };
 
 class WalkLight
 {
-private:
+ private:
     Button b;
     int tgside;
     int tw;
-public:
+ public:
     WalkLight(int tgside = 10, int tw = 0) :b()
     {
         this->tgside = tgside;
@@ -338,30 +352,31 @@ public:
 
 class LogicalMutex
 {
-private:
+  private:
     Button B;
     CarLightEW CEW;
     CarLightSN CSN;
     SensorES SE, SS;
     SensorWN SW, SN;
     WalkLight WLSN, WLEW;
-    std::mutex m1, m2, m3, m4, sensor, sensor1, button2, button1,car, car1;
-public:
+    std::mutex m1, m2, m3, m4, sensor, sensor1, button2, button1, car, car1;
+  public:
     LogicalMutex()
     {
-        m1.lock(); m2.lock(); m3.lock();  m4.lock(); 
-       button2.lock(); button1.lock();
+        m1.lock(); m2.lock(); m3.lock();  m4.lock();
+        button2.lock(); button1.lock();
     }
-    
-public:
+  public:
     int  YellowLight(CarLightEW* YL)
     {
         return YL->CounterY();
+       
     }
 
     int GRLight(CarLightEW* GRL)
     {
-         return GRL->CounterGR();
+        return GRL->CounterGR();
+       
     }
 
     int Newtg(SensorES& Ts)
@@ -381,6 +396,7 @@ public:
     }
 
     void Gettg(CarLightEW* pt, SensorES& Obj1, SensorWN& Obj2)
+    {
         pt->tg = 0;
       //SensorES tes; SensorWN twn;
         if (Newtg(Obj1) >= Newtg(Obj2))
@@ -391,10 +407,11 @@ public:
             pt->tg = Newtg(Obj2);
         }
     }
-public:
+  public:
     void SensorW()
     {
-        for (;;) {
+         for (;;) 
+         {
             if (GRLight(&CEW) == 5)
             {
                 m1.lock();
@@ -406,12 +423,13 @@ public:
                 Newtg(SW);
                 m1.unlock(); 
             }
-        }
+         }
     }
 
     void SensorE()
     {
-        for (;;) {
+       for (;;) 
+       {
             if (GRLight(&CEW) == 5)
             {
                 m2.lock();
@@ -428,7 +446,8 @@ public:
 
     void SensorS()
     {
-        for (;;) {
+       for (;;) 
+       {
             if (GRLight(&CSN) == 5)
             {
                 m3.lock();
@@ -440,80 +459,84 @@ public:
                 Newtg(SS);
                 m3.unlock();
             }
-        }
+       }
     }
 
     void SensorN()
     {
-        for (;;) 
+        for (;;)
         {
             if (GRLight(&CSN) == 5)
             {
-            m4.lock();
-            SN.GetT();
-            while (SN.t1 > 0);
-            sensor1.lock();
-            SN.outputT();
-            sensor1.unlock();
-            Newtg(SN);
-            m4.unlock();
+                m4.lock();
+                SN.GetT();
+                while (SN.t1 > 0);
+                sensor1.lock();
+                SN.outputT();
+                sensor1.unlock();
+                Newtg(SN);
+                m4.unlock();
             }
         }
     }
-    //LogicalMutex(){ m1.lock(); m2.lock(); m3.lock();m4.lock();button.lock();button1.lock();}
+    //LogicalMutex(){car.lock();car1.lock(); m1.lock(); m2.lock(); m3.lock();m4.lock();button.lock();button1.lock();} 
     void CL()
     {
-#ifdef LWQDBG
-		initDbg();
-#endif
-        for (;;) 
+        #ifdef LWQDBG
+        initDbg();
+        #endif
+        for (;;)
         {
-            
             GRLight(&CEW);//GRLight(&CEW)
             YellowLight(&CEW);
-          
-                if (WLEW.CheckB() == -1 && YellowLight(&CEW) == 0) //
-                {
-                    button1.lock();
-                    WLEW.WNLighting();
-                    std::this_thread::sleep_for(std::chrono::milliseconds(500));//delay(500);
-                    button1.unlock();
-                }
-                m3.lock();
-                m4.lock();
-                Gettg(&CEW, SS, SN);
-                m3.unlock();
-                m4.unlock();
-                while (B.flag == 1);
-                GRLight(&CSN);
-                YellowLight(&CSN);
-                if (WLSN.CheckB() == -1&& YellowLight(&CSN) == 0)//else// car.lock();
-                {
+     
+            if (WLEW.CheckB() == -1 && YellowLight(&CEW) == 0) //
+            {
+                button1.lock();
+                WLEW.WNLighting();
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));//delay(500);
+                button1.unlock();
+             }
+         
+            m3.lock();
+            m4.lock();
+            Gettg(&CEW, SS, SN);
+            m3.unlock();
+            m4.unlock();
+            while (B.flag == 1);
+            GRLight(&CSN);
+           
+            YellowLight(&CSN);
+         
+            if (WLSN.CheckB() == -1 && YellowLight(&CSN) == 0)//else// car.lock();
+            {
 
-                    button2.lock();
-                    WLSN.WNLighting();
-                    std::this_thread::sleep_for(std::chrono::milliseconds(500));// make thread sleep for 500 ms(can both add in void /main after thread.銆?
-                    button2.unlock();
-                }
-                m1.lock();
-                m2.lock();
-                Gettg(&CSN, SE, SW);
-                m1.unlock();
-                m2.unlock();
-                while (B.flag == 1);
+                button2.lock();
+                WLSN.WNLighting();
+                std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                button2.unlock();
+            }
+            
+            m1.lock();
+            m2.lock();
+            Gettg(&CSN, SE, SW);
+            m1.unlock();
+            m2.unlock();
+            while (B.flag == 1);
         }
     }
 
-    void WLABEW()
+    void WLABEW()//EW鏂瑰悜
     {
-        for (;;) 
-        {
-             WLEW.CheckB();
+        for (;;)
+       { 
+            WLEW.CheckB();
             if (WLEW.CheckB() == 1 && YellowLight(&CEW) == 0)
             {
                 button2.lock();
                 WLEW.WLighting();
                 WLEW.Setflag();
+                //car.unlock(); //if and else 娉ㄦ剰 
                 button2.unlock();
             }
         }
@@ -521,14 +544,16 @@ public:
 
     void WLABSN() 
     {
-        for (;;) {
-             WLSN.CheckB();
+       for (;;)
+        {
+            WLSN.CheckB();
             if (WLSN.CheckB() == 1 && YellowLight(&CSN) == 0)
             {
                 button1.lock();
                 WLSN.WLighting();
                 WLSN.Setflag();
-                button1.unlock();               
+                button1.unlock();
+                //car1.unlock();  //if and else 娉ㄦ剰
             }
         }
     }
@@ -537,23 +562,24 @@ public:
 
 int main()
 {
+    
     LogicalMutex LM;
-    std::thread t7(&LogicalMutex::CL, std::ref(LM));  
+    std::thread t7(&LogicalMutex::CL, std::ref(LM));
     std::thread t1(&LogicalMutex::SensorW, std::ref(LM));
     std::thread t2(&LogicalMutex::SensorE, std::ref(LM));
     std::thread t3(&LogicalMutex::SensorS, std::ref(LM));
     std::thread t4(&LogicalMutex::SensorN, std::ref(LM));
     std::thread t5(&LogicalMutex::WLABSN, std::ref(LM));
     std::thread t6(&LogicalMutex::WLABEW, std::ref(LM));
-    
-     t7.join();
+
+    t7.join();
     t1.join();
     t2.join();
     t3.join();
     t4.join();
     t5.join();
     t6.join();
-    
+
     cout << "this is a trafficlight system" << endl;
     return 0;
 }
