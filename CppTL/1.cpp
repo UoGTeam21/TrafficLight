@@ -486,16 +486,14 @@ public:
                 m4.unlock();
                 while (B.flag == 1);
                 GRLight(&CSN);
-               
-                YellowLight(&CSN);//灏戜竴涓猚arlock锛屽拰button lock锛屾瀯閫犮€?
-               
+                YellowLight(&CSN);
                 if (WLSN.CheckB() == -1&& YellowLight(&CSN) == 0)//else// car.lock();
                 {
 
                     button2.lock();
                     WLSN.WNLighting();
                     std::this_thread::sleep_for(std::chrono::milliseconds(500));// make thread sleep for 500 ms(can both add in void /main after thread.銆?
-                    button2.unlock();//car1.unlock();//瀵瑰簲鐨? car1.lock() 鍦ㄦ瀯閫犲嚱鏁颁腑锛?
+                    button2.unlock();
                 }
                 m1.lock();
                 m2.lock();
