@@ -495,6 +495,7 @@ class LogicalMutex
                 button1.lock();
                 WLEW.WNLighting();
                 std::this_thread::sleep_for(std::chrono::milliseconds(500));//delay(500);
+                WLEW.Setflag();
                 button1.unlock();
              }
          
@@ -514,6 +515,7 @@ class LogicalMutex
                 button2.lock();
                 WLSN.WNLighting();
                 std::this_thread::sleep_for(std::chrono::milliseconds(500));
+                WLSN.Setflag();
                 button2.unlock();
             }
             
