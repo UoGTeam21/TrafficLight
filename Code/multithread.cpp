@@ -365,8 +365,8 @@ class LogicalMutex
   public:
     LogicalMutex()
     {
-        m1.lock(); m2.lock(); m3.lock();  m4.lock();
-        button2.lock(); button1.lock();
+       ; //m1.lock(); m2.lock(); m3.lock();  m4.lock();
+       // button2.lock(); button1.lock();
     }
   public:
     int  YellowLight(CarLightEW* YL)
