@@ -126,8 +126,9 @@ public:
             digitalWrite(4, 1);
             digitalWrite(5, 1); //EW green, else red
             tg--;
+            {
             return tg;
-            
+            }
         }
 
     }
@@ -189,8 +190,9 @@ public:
             digitalWrite(26, 1);
             digitalWrite(27, 1); //SN green, else red;
             CarLightEW::tg--;
+            {
             return CarLightEW::tg;
-          
+            }
         }
     }
 
